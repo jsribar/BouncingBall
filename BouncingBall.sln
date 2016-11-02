@@ -3,7 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BouncingBall", "BouncingBall\BouncingBall.shproj", "{CB25BF92-6DE0-4B05-83C9-77B4C72BF5EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BouncingBallDemo", "BouncingBallDemo\BouncingBallDemo.csproj", "{47189536-365C-4ED9-B3D7-8FB554F957B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{5245BC42-5B1F-48EF-9C38-B0B56319E892}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		BouncingBall\BouncingBall.projitems*{47189536-365c-4ed9-b3d7-8fb554f957b5}*SharedItemsImports = 4
+		BouncingBall\BouncingBall.projitems*{5245bc42-5b1f-48ef-9c38-b0b56319e892}*SharedItemsImports = 4
+		BouncingBall\BouncingBall.projitems*{cb25bf92-6de0-4b05-83c9-77b4c72bf5eb}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47189536-365C-4ED9-B3D7-8FB554F957B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47189536-365C-4ED9-B3D7-8FB554F957B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47189536-365C-4ED9-B3D7-8FB554F957B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47189536-365C-4ED9-B3D7-8FB554F957B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5245BC42-5B1F-48EF-9C38-B0B56319E892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5245BC42-5B1F-48EF-9C38-B0B56319E892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5245BC42-5B1F-48EF-9C38-B0B56319E892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5245BC42-5B1F-48EF-9C38-B0B56319E892}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
