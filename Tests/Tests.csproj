@@ -52,6 +52,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="LineIntersectionsTest.cs" />
+    <Compile Include="LineTests.cs" />
     <Compile Include="TrajectoryTest.cs" />
     <Compile Include="VelocityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

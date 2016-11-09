@@ -9,6 +9,8 @@
     <Import_RootNamespace>Vsite.Pood.BouncingBall</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Line.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LineIntersections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PointD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trajectory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Velocity.cs" />
