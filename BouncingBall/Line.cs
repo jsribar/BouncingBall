@@ -6,7 +6,7 @@ namespace Vsite.Pood.BouncingBall
 {
     class Line
     {
-        // Assume that: Ax + By + C = 0
+        // Line through two points is defined as: Ax + By + C = 0
         public Line(PointD p1, PointD p2)
         {
             A = p2.Y - p1.Y;
