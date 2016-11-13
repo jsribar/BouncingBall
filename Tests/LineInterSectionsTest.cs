@@ -21,7 +21,7 @@ namespace Vsite.Pood.BouncingBallTests
         [TestMethod]
         public void LineIntersections_GetIntersectionForTwoNonIntersectingLines()
         {
-            Line horizontal = new Line(new PointD(5, 3), new PointD(9, 3));
+            Line horizontal = new Line(new PointD(5, 3), new PointD(5, 7));
             LineIntersections li = new LineIntersections(horizontal);
             Line vertical = new Line(new PointD(6, 4), new PointD(6, 7));
             Assert.IsNull(li.GetIntersection(vertical));
