@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="LineInterSectionsTest.cs" />
     <Compile Include="LineTest.cs" />
+    <Compile Include="PointDTest.cs" />
     <Compile Include="TrajectoryTest.cs" />
     <Compile Include="VelocityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
