@@ -16,5 +16,10 @@ namespace BouncingBallDemo
 		{
 			InitializeComponent();
 		}
-	}
+
+        private void playground1_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

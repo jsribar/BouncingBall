@@ -1,30 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Vsite.Pood.BouncingBall
 {
     class LineIntersections
     {
-        //predstavlja glavnu liniju koja opisuje početnu i traži prejeke sa linijama koje su sa strane zadane
-
-        public LineIntersections(Line main)
+        public LineIntersections(Line line)
         {
-            this.main = main;
+            this.line0 = line;
         }
-        //želim naći presjecište sa nekom drugom linijom
-        public PointD GetIntersection(Line l)
+
+        public PointD GetIntersection(Line line1)
         {
-            double det = main.A * l.B - l.A * main.B;
+            double det = line0.A * line1.B - line1.A * line0.B;
             if (det == 0)
                 return null;
-            double x = (l.B * main.C - main.B * l.C) / det;
-            double y = (main.A * l.C - l.A * main.C) / det;
+            double x = (line0.B * line1.C - line1.B * line0.C) / det;
+            double y = (line1.A * line0.C - line0.A * line1.C) / det;
             return new PointD(x, y);
         }
 
+        public IEnumerable<CollisionPoint> GetCollisionPoints (IEnumerable<CollisionPlane> planes)
+        {
+            List<CollisionPoint> collisionPoints = new List<CollisionPoint>();
+            foreach(CollisionPlane plane in planes)
+            {
+                PointD intersection = GetIntersection(plane);
+                if (intersection != null)
+                    collisionPoints.Add(new BouncingBall.CollisionPoint(plane, intersection));
+            }
+            return collisionPoints;
+        }
+
+        public IEnumerable<CollisionPoint> GetClosestCollisionPoints(IEnumerable<CollisionPlane> planes)
+        {
+            IEnumerable<CollisionPoint> allCollisionPoints = GetCollisionPoints(planes);
+            double minimalDistance = allCollisionPoints.Min(cp => cp.Point.Distance(line0.P1));
+            return allCollisionPoints.Where(cp => cp.Point.Distance(line0.P1) == minimalDistance);
+         
+        }
 
 
-        private Line main;
+        private Line line0;
     }
 }
