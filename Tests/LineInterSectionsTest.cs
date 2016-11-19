@@ -10,7 +10,7 @@ namespace Vsite.Pood.BouncingBallTests
     public class LineInterSectionsTest
     {
         [TestMethod]
-        public void LineIntersections_GetIntersectionForTwoOrtogonalLines()
+        public void LineIntersections_GetIntersectionReturnsIntersectionPointForTwoOrtogonalLineSections()
         {
             Line horizontal = new Line(new PointD(5, 3), new PointD(9, 3));
             LineIntersections li = new LineIntersections(horizontal);
@@ -21,7 +21,7 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
-        public void LineIntersections_GetIntersectionForTwoNonIntersectingLines()
+        public void LineIntersections_GetIntersectionReturnsNullForTwoInclinedLineSections()
         {
             Line horizontal = new Line(new PointD(5, 3), new PointD(5, 7));
             LineIntersections li = new LineIntersections(horizontal);
@@ -30,7 +30,7 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
-        public void LineIntersections_GetIntersectionForTwoParallelHorizontalLines()
+        public void LineIntersections_GetIntersectionReturnsNullForTwoParallelHorizontalLines()
         {
             Line horizontal1 = new Line(new PointD(5, 3), new PointD(9, 3));
             LineIntersections li = new LineIntersections(horizontal1);
@@ -39,9 +39,9 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
-        public void LineIntersections_GetIntersectionForTwoTouchingOrtogonalLines()
+        public void LineIntersections_GetIntersectionReturnsCommonPointForTwoLineSectionsThatStartInThatPoint()
         {
-            Line horizontal = new Line(new PointD(5, 3), new PointD(9, 3));
+            Line horizontal = new Line(new PointD(9, 3), new PointD(5, 3));
             LineIntersections li = new LineIntersections(horizontal);
             Line vertical = new Line(new PointD(9, 3), new PointD(9, 7));
             PointD p = li.GetIntersection(vertical);
@@ -50,7 +50,18 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
-        public void LineIntersections_GetIntersectionForTwoInclinedLines()
+        public void LineIntersections_GetIntersectionReturnsCommonPointForTwoLineSectionsThatEndInThatPoint()
+        {
+            Line horizontal = new Line(new PointD(5, 3), new PointD(9, 3));
+            LineIntersections li = new LineIntersections(horizontal);
+            Line vertical = new Line(new PointD(9, 7), new PointD(9, 3));
+            PointD p = li.GetIntersection(vertical);
+            Assert.AreEqual(9, p.X, 1e-5);
+            Assert.AreEqual(3, p.Y, 1e-5);
+        }
+
+        [TestMethod]
+        public void LineIntersections_GetIntersectionReturnsIntersectionPointForTwoInclinedLineSections()
         {
             Line line1 = new Line(new PointD(0, 0), new PointD(4, 4));
             LineIntersections li = new LineIntersections(line1);
@@ -58,6 +69,50 @@ namespace Vsite.Pood.BouncingBallTests
             PointD p = li.GetIntersection(line2);
             Assert.AreEqual(2, p.X, 1e-5);
             Assert.AreEqual(2, p.Y, 1e-5);
+        }
+
+
+        [TestMethod]
+        public void LineIntersections_GetIntersectionReturnsIntersectionPointForTwoInclinedLineSectionsFirstGivenInOpositeOrder()
+        {
+            Line line1 = new Line(new PointD(4, 4), new PointD(0, 0));
+            LineIntersections li = new LineIntersections(line1);
+            Line line2 = new Line(new PointD(0, 4), new PointD(4, 0));
+            PointD p = li.GetIntersection(line2);
+            Assert.AreEqual(2, p.X, 1e-5);
+            Assert.AreEqual(2, p.Y, 1e-5);
+        }
+
+
+        [TestMethod]
+        public void LineIntersections_GetIntersectionReturnsIntersectionPointForTwoInclinedLineSectionsSecondGivenInOpositeOrder()
+        {
+            Line line1 = new Line(new PointD(0, 0), new PointD(4, 4));
+            LineIntersections li = new LineIntersections(line1);
+            Line line2 = new Line(new PointD(4, 0), new PointD(0, 4));
+            PointD p = li.GetIntersection(line2);
+            Assert.AreEqual(2, p.X, 1e-5);
+            Assert.AreEqual(2, p.Y, 1e-5);
+        }
+
+        [TestMethod]
+        public void LineIntersections_GetIntersectionReturnsIntersectionPointForTwoInclinedLineSectionsBothGivenInOpositeOrder()
+        {
+            Line line1 = new Line(new PointD(4, 4), new PointD(0, 0));
+            LineIntersections li = new LineIntersections(line1);
+            Line line2 = new Line(new PointD(4, 0), new PointD(0, 4));
+            PointD p = li.GetIntersection(line2);
+            Assert.AreEqual(2, p.X, 1e-5);
+            Assert.AreEqual(2, p.Y, 1e-5);
+        }
+
+        [TestMethod]
+        public void LineIntersections_GetIntersectionReturnsNullForTwoLineSectionsThatHaveNoIntersection()
+        {
+            Line line1 = new Line(new PointD(0, 0), new PointD(4, 4));
+            LineIntersections li = new LineIntersections(line1);
+            Line line2 = new Line(new PointD(0, 5), new PointD(10, 5));
+            Assert.IsNull(li.GetIntersection(line2));
         }
 
         [TestMethod]
