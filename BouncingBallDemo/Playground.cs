@@ -10,7 +10,7 @@ namespace Vsite.Pood.BouncingBallDemo
         public Playground()
         {
             InitializeComponent();
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+            DoubleBuffered = true;
         }
 
         public void InitTrajectory()
@@ -47,7 +47,7 @@ namespace Vsite.Pood.BouncingBallDemo
 
         private Trajectory trajectory = null;
         private float ballRadius = 5;
-        private double ballVelocity = 200;
+        private double ballVelocity = 300;
 
     }
 }

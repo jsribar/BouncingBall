@@ -34,7 +34,7 @@
             // 
             // timerRefresh
             // 
-            this.timerRefresh.Interval = 25;
+            this.timerRefresh.Interval = 10;
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
             // Playground
