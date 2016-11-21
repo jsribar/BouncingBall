@@ -56,6 +56,8 @@ namespace Vsite.Pood.BouncingBall
         public IEnumerable<CollisionPoint> GetClosestCollisionPoints(IEnumerable<CollisionPlane> planes)
         {
             IEnumerable<CollisionPoint> allCollisionPoints = GetCollisionPoints(planes);
+            if (allCollisionPoints.Count() == 0)
+                return allCollisionPoints;
             double minimalDistance = allCollisionPoints.Min(cp => cp.Point.Distance(line0.P1));
             return allCollisionPoints.Where(cp => cp.Point.Distance(line0.P1) == minimalDistance);
         }

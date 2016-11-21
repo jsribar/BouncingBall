@@ -162,7 +162,19 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
-        public void LineIntersection_GetClosestCollisionPointsReturnsOneCollisionPointsForTwoPlaneColliding()
+        public void LineIntersection_GetClosestCollisionPointsReturnsEmptyListWhenThereIsNoCollidingPlane()
+        {
+            Line line1 = new Line(new PointD(0, 3), new PointD(4, 7));
+            LineIntersections li = new LineIntersections(line1);
+            CollisionPlane plane1 = new CollisionPlane(new PointD(3, 0), new PointD(3, 4));
+            CollisionPlane plane2 = new CollisionPlane(new PointD(0, 2), new PointD(4, 2));
+            List<CollisionPlane> collisionPlanes = new List<CollisionPlane> { plane1, plane2 };
+            var collisionPoints = li.GetClosestCollisionPoints(collisionPlanes);
+            Assert.AreEqual(0, collisionPoints.Count());
+        }
+
+        [TestMethod]
+        public void LineIntersection_GetClosestCollisionPointsReturnsOneCollisionPointsForTwoPlanesWithDifferentPointsOfCollision()
         {
             Line line1 = new Line(new PointD(0, 0), new PointD(4, 4));
             LineIntersections li = new LineIntersections(line1);
@@ -174,6 +186,20 @@ namespace Vsite.Pood.BouncingBallTests
             Assert.AreEqual(plane2, collisionPoints.First().Plane);
             Assert.AreEqual(2, collisionPoints.First().Point.X);
             Assert.AreEqual(2, collisionPoints.First().Point.Y);
+        }
+
+        [TestMethod]
+        public void LineIntersection_GetClosestCollisionPointsReturnsTwoCollisionPointsForTwoPlanesIntersectingInThePointOfCollision()
+        {
+            Line line1 = new Line(new PointD(0, 0), new PointD(4, 4));
+            LineIntersections li = new LineIntersections(line1);
+            CollisionPlane plane1 = new CollisionPlane(new PointD(3, 0), new PointD(3, 4));
+            CollisionPlane plane2 = new CollisionPlane(new PointD(0, 3), new PointD(4, 3));
+            List<CollisionPlane> collisionPlanes = new List<CollisionPlane> { plane1, plane2 };
+            var collisionPoints = li.GetClosestCollisionPoints(collisionPlanes);
+            Assert.AreEqual(2, collisionPoints.Count());
+            Assert.IsNotNull(collisionPoints.FirstOrDefault(cp => cp.Plane == plane1));
+            Assert.IsNotNull(collisionPoints.FirstOrDefault(cp => cp.Plane == plane2));
         }
 
     }
