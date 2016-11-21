@@ -39,14 +39,12 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
-        public void LineIntersections_GetIntersectionReturnsCommonPointForTwoLineSectionsThatStartInThatPoint()
+        public void LineIntersections_GetIntersectionReturnsNullForLineThatintersectsStartingPoint()
         {
             Line horizontal = new Line(new PointD(9, 3), new PointD(5, 3));
             LineIntersections li = new LineIntersections(horizontal);
             Line vertical = new Line(new PointD(9, 3), new PointD(9, 7));
-            PointD p = li.GetIntersection(vertical);
-            Assert.AreEqual(9, p.X, 1e-5);
-            Assert.AreEqual(3, p.Y, 1e-5);
+            Assert.IsNull(li.GetIntersection(vertical));
         }
 
         [TestMethod]
