@@ -18,25 +18,26 @@ namespace Vsite.Pood.BouncingBall
             if (det == 0)
                 return null;
 
-            double s = line0.C + line0.A * line1.P1.X + line0.B * line1.P1.Y;
-            if (!IsFirstWithinRangeOfSecond(s, det))
+			double s = line1.C + line1.A * line0.P1.X + line1.B * line0.P1.Y;
+			// s = 0 means that line1 crosses starting point of line0
+			if (s == 0 || !IsFirstWithinRangeOfSecond(-s, det))
+				return null;
+
+			double t = line0.C + line0.A * line1.P1.X + line0.B * line1.P1.Y;
+            if (!IsFirstWithinRangeOfSecond(t, det))
                 return null;
 
-            double t = line1.C + line1.A * line0.P1.X + line1.B * line0.P1.Y;
-            if (!IsFirstWithinRangeOfSecond(-t, det))
-                return null;
-
-            t /= det;
-            double x = line0.P1.X + (t * line0.B);
-            double y = line0.P1.Y - (t * line0.A);
+            s /= det;
+            double x = line0.P1.X + (s * line0.B);
+            double y = line0.P1.Y - (s * line0.A);
             return new PointD(x, y);
         }
 
         bool IsFirstWithinRangeOfSecond(double a, double b)
         {
-            if (a > 0 && b > 0)
+            if (a >= 0 && b > 0)
                 return a <= b;
-            if (a < 0 && b < 0)
+            if (a <= 0 && b < 0)
                 return a >= b;
             return false;
         }
