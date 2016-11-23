@@ -22,6 +22,29 @@ namespace Vsite.Pood.BouncingBall
             return new PointD(starting.X + deltaX, starting.Y + deltaY);
         }
 
+        public void ChangeAngle(double planeAngle)
+        {
+            if(angle<0)
+                angle = -angle - 2* planeAngle;
+            else
+                angle = -angle + 2* planeAngle;
+            while (angle > Math.PI)
+                angle -= Math.PI;
+            while (angle < -Math.PI)
+                angle += Math.PI;
+
+        }
+
+        public double TimeInSeconds(double distance)
+        {
+            return distance / speed;
+        }
+
+        public double Angle
+        {
+            get { return angle; }
+        }
+
         private double speed;
         private double angle;
 

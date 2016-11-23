@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Vsite.Pood.BouncingBall;
@@ -26,7 +27,7 @@ namespace Vsite.Pood.BouncingBallDemo
         {
             if (trajectory == null)
                 return;
-            PointD newPosition = trajectory.GetNewPosition(DateTime.Now);
+            PointD newPosition = trajectory.GetNewPosition(DateTime.Now,planes);
             pe.Graphics.FillEllipse(Brushes.Blue, GetBallBounds(newPosition));
         }
 
@@ -49,5 +50,6 @@ namespace Vsite.Pood.BouncingBallDemo
         private float ballRadius = 5;
         private double ballVelocity = 300;
 
+        private List<CollisionPlane> planes = new List<CollisionPlane> { new CollisionPlane(new PointD(200, 0), new PointD(200, 300)), new CollisionPlane(new PointD(0, 300), new PointD(300, 300)) };
     }
 }
