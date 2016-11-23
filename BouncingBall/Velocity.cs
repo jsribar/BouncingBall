@@ -12,9 +12,9 @@ namespace Vsite.Pood.BouncingBall
 
         public PointD GetNewPosition(PointD starting, double seconds)
         {
-            double lenght = speed * seconds;
-            double deltaX = lenght * Math.Cos(angle);
-            double deltaY = lenght * Math.Sin(angle);
+            double length = speed * seconds;
+            double deltaX = length * Math.Cos(angle);
+            double deltaY = length * Math.Sin(angle);
             return new PointD(starting.X + deltaX, starting.Y + deltaY);
         }
 

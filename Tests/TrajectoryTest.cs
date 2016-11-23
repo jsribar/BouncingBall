@@ -55,6 +55,7 @@ namespace Vsite.Pood.BouncingBallTests
             Assert.AreEqual(2, p2.Y, 1e-5);
         }
 
+
         [TestMethod]
         public void Trajectory_GetNewPositionReturnsNewPointForInclinedMovementAt45Deg()
         {

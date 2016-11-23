@@ -52,18 +52,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="LineIntersectionsTests.cs" />
-    <Compile Include="LineTests.cs" />
-    <Compile Include="PointDTest.cs" />
+    <Compile Include="LineInterSectionsTest.cs" />
+    <Compile Include="LineTest.cs" />
+    <Compile Include="PoinDTest.cs" />
     <Compile Include="TrajectoryTest.cs" />
     <Compile Include="VelocityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BouncingBallDemo\BouncingBallDemo.csproj">
-      <Project>{47189536-365c-4ed9-b3d7-8fb554f957b5}</Project>
-      <Name>BouncingBallDemo</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

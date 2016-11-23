@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // timer1
+            // timerRefresh
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerRefresh.Interval = 10;
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
             // Playground
             // 
@@ -45,6 +46,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerRefresh;
     }
 }
