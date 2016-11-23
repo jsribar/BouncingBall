@@ -1,13 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Vsite.Pood.BouncingBall;
+
 namespace Vsite.Pood.BouncingBallTests
 {
     [TestClass]
-    public class PointDTest
+    public class PoinDTest
     {
         [TestMethod]
-        public void PointD_DistanceReturns1For2PointsPlacedHorizontally()
+        public void PointD_DistanceReturns1ForToPointsPlacedHorizontally()
         {
             PointD p1 = new PointD(3, 4);
             PointD p2 = new PointD(4, 4);
@@ -15,7 +16,7 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
-        public void PointD_DistanceReturns2For2PointsPlacedVertically()
+        public void PointD_DistanceReturns2ForToPointsPlacedVertically()
         {
             PointD p1 = new PointD(3, 4);
             PointD p2 = new PointD(3, 6);
@@ -23,7 +24,7 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
-        public void PointD_DistanceReturns5For2PointsPlacedInclined()
+        public void PointD_DistanceReturns5ForToInclinedPoints()
         {
             PointD p1 = new PointD(0, 0);
             PointD p2 = new PointD(4, 3);

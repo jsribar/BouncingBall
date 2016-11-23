@@ -22,6 +22,5 @@ namespace Vsite.Pood.BouncingBall
         private Velocity velocity;
         private PointD startingPoint;
         private DateTime startingTime;
-
     }
 }
