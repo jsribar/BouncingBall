@@ -8,7 +8,9 @@ namespace Vsite.Pood.BouncingBall
     {
         public CollisionPlane(PointD p1, PointD p2) : base(p1, p2)
         {
-
+            Angle = Math.Atan2(p2.Y - p1.Y, p2.X - p1.X);
         }
+
+        public readonly double Angle;
     }
 }
