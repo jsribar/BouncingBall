@@ -176,6 +176,17 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
+        public void LineIntersections_GetIntersectionReturnsIntersectionPointOnCollisionPlaneForLineEndingOnIt()
+        {
+            Line line1 = new Line(new PointD(0, 0), new PointD(200, 200));
+            LineIntersections li = new LineIntersections(line1);
+            Line line2 = new Line(new PointD(200, 0), new PointD(200, 400));
+            PointD p = li.GetIntersection(line2);
+            Assert.AreEqual(200, p.X, 1e-5);
+            Assert.AreEqual(200, p.Y, 1e-5);
+        }
+
+        [TestMethod]
         public void LineIntersections_GetIntersectionReturnsNullForTwoLineSectionsThatHaveNoIntersection()
         {
             Line line1 = new Line(new PointD(0, 0), new PointD(4, 4));
@@ -231,6 +242,18 @@ namespace Vsite.Pood.BouncingBallTests
         }
 
         [TestMethod]
+        public void LineIntersections_GetCollisionPointsReturnsIntersectionPointOnCollisionPlaneForLineEndingOnIt()
+        {
+            Line line1 = new Line(new PointD(0, 0), new PointD(200, 200));
+            LineIntersections li = new LineIntersections(line1);
+            CollisionPlane plane1 = new CollisionPlane(new PointD(200, 0), new PointD(200, 400));
+            var collisionPoints = li.GetCollisionPoints(new List<CollisionPlane> { plane1 } );
+            Assert.AreEqual(1, collisionPoints.Count());
+            Assert.AreEqual(200, collisionPoints.First().Point.X, 1e-5);
+            Assert.AreEqual(200, collisionPoints.First().Point.Y, 1e-5);
+        }
+
+        [TestMethod]
         public void LineIntersection_GetClosestCollisionPointsReturnsEmptyListWhenThereIsNoCollidingPlane()
         {
             Line line1 = new Line(new PointD(0, 3), new PointD(4, 7));
@@ -269,6 +292,18 @@ namespace Vsite.Pood.BouncingBallTests
             Assert.AreEqual(2, collisionPoints.Count());
             Assert.IsNotNull(collisionPoints.FirstOrDefault(cp => cp.Plane == plane1));
             Assert.IsNotNull(collisionPoints.FirstOrDefault(cp => cp.Plane == plane2));
+        }
+
+        [TestMethod]
+        public void LineIntersections_GetClosestCollisionPointsReturnsIntersectionPointOnCollisionPlaneForLineEndingOnIt()
+        {
+            Line line1 = new Line(new PointD(0, 0), new PointD(200, 200));
+            LineIntersections li = new LineIntersections(line1);
+            CollisionPlane plane1 = new CollisionPlane(new PointD(200, 0), new PointD(200, 400));
+            var collisionPoints = li.GetClosestCollisionPoints(new List<CollisionPlane> { plane1 });
+            Assert.AreEqual(1, collisionPoints.Count());
+            Assert.AreEqual(200, collisionPoints.First().Point.X, 1e-5);
+            Assert.AreEqual(200, collisionPoints.First().Point.Y, 1e-5);
         }
 
     }
