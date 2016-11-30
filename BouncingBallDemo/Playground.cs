@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Vsite.Pood.BouncingBall;
 
@@ -16,17 +12,24 @@ namespace Vsite.Pood.BouncingBallDemo
         public Playground()
         {
             InitializeComponent();
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+            DoubleBuffered = true;
+        }
+
+        public void InitTrajectory()
+        {
+            Velocity vel = new Velocity(ballVelocity, Math.PI / 4);
+            PointD p0 = new PointD(0, 0);
+            DateTime now = DateTime.Now;
+            trajectory = new Trajectory(vel, p0, now);
+            timerRefresh.Start();
         }
 
         protected override void OnPaint(PaintEventArgs pe)
         {
             if (trajectory == null)
                 return;
-            PointD newP = trajectory.GetNewPosition(DateTime.Now);
-            RectangleF rect = new RectangleF((float)(newP.X - 5), (float)(newP.Y - 5), 10f, 10f);
-            pe.Graphics.FillEllipse(Brushes.Blue, rect);
-            //base.OnPaint(pe);
+            PointD newPosition = trajectory.GetNewPosition(DateTime.Now, planes);
+            pe.Graphics.FillEllipse(Brushes.Blue, GetBallBounds(newPosition));
         }
 
         private void timerRefresh_Tick(object sender, EventArgs e)
@@ -34,20 +37,21 @@ namespace Vsite.Pood.BouncingBallDemo
             Invalidate();
         }
 
-        public void InitTrajectory()
+        private RectangleF GetBallBounds(PointD center)
         {
-            Velocity vel = new Velocity(100, Math.PI/4);
-            PointD p0 = new PointD(0, 0);
-            DateTime now = DateTime.Now;
-            trajectory = new Trajectory(vel, p0, now);
-            timerRefresh.Start();
+            return new RectangleF((float)(center.X - ballRadius), (float)(center.Y - ballRadius), 2 * ballRadius, 2 * ballRadius);
         }
 
-        Trajectory trajectory = null;
-
-        private void Playground_MouseClick(object sender, MouseEventArgs e)
+        private void Playground_Click(object sender, EventArgs e)
         {
             InitTrajectory();
         }
+
+        private Trajectory trajectory = null;
+        private float ballRadius = 5;
+        private double ballVelocity = 300;
+
+        private List<CollisionPlane> planes = new List<CollisionPlane> { new CollisionPlane(new PointD(200, 0), new PointD(200, 300)), new CollisionPlane(new PointD(0, 300), new PointD(300, 300)) };
+
     }
 }

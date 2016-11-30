@@ -34,12 +34,12 @@
             // 
             // timerRefresh
             // 
-            this.timerRefresh.Interval = 25;
+            this.timerRefresh.Interval = 10;
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
             // Playground
             // 
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Playground_MouseClick);
+            this.Click += new System.EventHandler(this.Playground_Click);
             this.ResumeLayout(false);
 
         }
