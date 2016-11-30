@@ -13,7 +13,7 @@ namespace Vsite.Pood.BouncingBall
             P2 = p2;
             A = p2.Y - p1.Y;
             B = p1.X - p2.X;
-            C = - A * p1.X - B * p1.Y;
+            C = -A * p1.X - B * p1.Y;
         }
 
         public readonly double A;

@@ -15,13 +15,18 @@ namespace Vsite.Pood.BouncingBallDemo
             DoubleBuffered = true;
         }
 
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+
         public void InitTrajectory()
         {
             Velocity vel = new Velocity(ballVelocity, Math.PI / 4);
             PointD p0 = new PointD(0, 0);
             DateTime now = DateTime.Now;
             trajectory = new Trajectory(vel, p0, now);
-            timerRefresh.Start();
+
         }
 
         protected override void OnPaint(PaintEventArgs pe)
@@ -51,7 +56,7 @@ namespace Vsite.Pood.BouncingBallDemo
         private float ballRadius = 5;
         private double ballVelocity = 300;
 
-        private List<CollisionPlane> planes = new List<CollisionPlane> { new CollisionPlane(new PointD(200, 0), new PointD(200, 300)), new CollisionPlane(new PointD(0, 300), new PointD(300, 300)) };
+        private List<ColisionPlane> planes = new List<ColisionPlane> { new ColisionPlane(new PointD(200, 0), new PointD(200, 300)), new ColisionPlane(new PointD(0, 300), new PointD(300, 300)) };
 
     }
 }

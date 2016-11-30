@@ -32,27 +32,6 @@ namespace Vsite.Pood.BouncingBall
             double y = line0.P1.Y - (s * line0.A);
             return new PointD(x, y);
         }
-        
-        public IEnumerable<ColisionPoint> GetColisionPoints(IEnumerable<ColisionPlane> planes)
-        {
-            List<ColisionPoint> colisionPoints = new List<ColisionPoint>();
-            foreach(ColisionPlane plane in planes)
-            {
-                PointD intersection = GetIntersection(plane);
-                if (intersection!=null)
-                    colisionPoints.Add(new ColisionPoint(plane, intersection));
-            }
-            return colisionPoints;
-        }
-
-        public IEnumerable<ColisionPoint> GetClosestColisionPoints(IEnumerable<ColisionPlane> planes)
-        {
-            IEnumerable<ColisionPoint> allColisionPoints = GetColisionPoints(planes);
-            double minimalDistance = allColisionPoints.Min(cp => cp.Point.distance(line0.P1));
-            return allColisionPoints.Where(cp => cp.Point.distance(line0.P1) == minimalDistance);
-
-            throw new NotImplementedException();
-        }
 
         bool IsFirstWithinRangeOfSecond(double a, double b)
         {
