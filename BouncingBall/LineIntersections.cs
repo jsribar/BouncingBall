@@ -61,7 +61,7 @@ namespace Vsite.Pood.BouncingBall
             if (allCollisionPoints.Count() == 0)
                 return allCollisionPoints;
             double minimalDistance = allCollisionPoints.Min(cp => cp.Point.Distance(line0.P1));
-            return allCollisionPoints.Where(cp => cp.Point.Distance(line0.P1) == minimalDistance);
+            return allCollisionPoints.Where(cp => cp.Point.Distance(line0.P1).IsAllmostEqual(minimalDistance));
         }
 
         private Line line0;
