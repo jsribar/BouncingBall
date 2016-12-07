@@ -8,6 +8,8 @@ namespace Vsite.Pood.BouncingBall
     {
         public DestroyableBrick(PointD leftTop, PointD rightBottom, double ballRadius)
         {
+            LeftTop = leftTop;
+            RightBottom = rightBottom;
             double yTop = leftTop.Y - ballRadius;
             double xLeft = leftTop.X - ballRadius;
             double yBottom = rightBottom.Y + ballRadius;
@@ -42,5 +44,7 @@ namespace Vsite.Pood.BouncingBall
         }
 
         private List<CollisionPlane> outerPlanes;
+        public readonly PointD LeftTop;
+        public readonly PointD RightBottom;
     }
 }
