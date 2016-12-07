@@ -91,7 +91,28 @@ namespace Vsite.Pood.BouncingBallDemo
         private float ballRadius = 10;
         private double ballVelocity = 300;
 
-        private List<CollisionPlane> planes;
+        private List<CollisionPlane> walls;
+        private List<ICollisionObject> destroyableObstacles = new List<ICollisionObject>();
 
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
+            this.SuspendLayout();
+            // 
+            // Playground
+            // 
+            this.Click += new System.EventHandler(this.Playground_Click_1);
+            this.ResumeLayout(false);
+
+        }
+
+        private Timer timerRefresh;
+        private System.ComponentModel.IContainer components;
+
+        private void Playground_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

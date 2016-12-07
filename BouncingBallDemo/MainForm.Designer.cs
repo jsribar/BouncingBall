@@ -40,7 +40,6 @@
             this.playground1.Size = new System.Drawing.Size(284, 261);
             this.playground1.TabIndex = 0;
             this.playground1.Text = "playground1";
-            this.playground1.Click += new System.EventHandler(this.playground1_Click);
             // 
             // Form1
             // 

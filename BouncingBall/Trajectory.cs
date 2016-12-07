@@ -35,7 +35,7 @@ namespace Vsite.Pood.BouncingBall
                 startingPoint = collisionPoints.First().Point;
                 startingTime = startingTime.AddSeconds(time);
                 foreach (CollisionPoint cp in collisionPoints)
-                    velocity.ChangeAngle(cp.Plane.Angle);
+                    velocity = cp.ChangeVelocity(velocity, cp);
             }
         }
 

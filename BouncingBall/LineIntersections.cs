@@ -43,19 +43,19 @@ namespace Vsite.Pood.BouncingBall
         }
 
 
-        public IEnumerable<CollisionPoint> GetCollisionPoints(IEnumerable<CollisionPlane> planes)
+        public IEnumerable<CollisionPoint> GetCollisionPoints(IEnumerable<ICollisionObject> planes)
         {
             List<CollisionPoint> collisionPoints = new List<CollisionPoint>();
-            foreach (CollisionPlane plane in planes)
+            foreach (ICollisionObject plane in planes)
             {
-                PointD intersection = GetIntersection(plane);
-                if (intersection != null)
+                IEnumerable<PointD> intersection = plane.GetIntersections(line0);
+                foreach (PointD intersection in intersections)
                     collisionPoints.Add(new CollisionPoint(plane, intersection));
             }
             return collisionPoints;
         }
 
-        public IEnumerable<CollisionPoint> GetClosestCollisionPoints(IEnumerable<CollisionPlane> planes)
+        public IEnumerable<CollisionPoint> GetClosestCollisionPoints(IEnumerable<ICollisionObject> planes)
         {
             IEnumerable<CollisionPoint> allCollisionPoints = GetCollisionPoints(planes);
             if (allCollisionPoints.Count() == 0)
@@ -64,6 +64,6 @@ namespace Vsite.Pood.BouncingBall
             return allCollisionPoints.Where(cp => cp.Point.Distance(line0.P1).IsAllmostEqual(minimalDistance));
         }
 
-        private Line line0;
+        public readonly Line line0;
     }
 }
