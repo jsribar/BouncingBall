@@ -4,13 +4,13 @@ using Vsite.Pood.BouncingBall;
 
 namespace Tests
 {
-	[TestClass]
-	public class VelocityTest
-	{
-		[TestMethod]
-		public void Velocity_GetNewPositionReturnsNewPointForVerticalMovement()
-		{
-			Velocity v = new Velocity(1, Math.PI / 2);
+    [TestClass]
+    public class VelocityTest
+    {
+        [TestMethod]
+        public void Velocity_GetNewPositionReturnsNewPointForVerticalMovement()
+        {
+            Velocity v = new Velocity(1, Math.PI / 2);
             PointD p1 = new Vsite.Pood.BouncingBall.PointD(1, 0);
             PointD p2 = v.GetNewPosition(p1, 5);
             Assert.AreEqual(1, p2.X, 1e-5);
@@ -71,67 +71,66 @@ namespace Tests
         [TestMethod]
         public void Velocity_ChangeAngleSetsAngleFrom45DegTo135DegForVerticalPlane()
         {
-            Velocity v = new Velocity(1, Math.PI/4);
+            Velocity v = new Velocity(1, Math.PI / 4);
             v.ChangeAngle(Math.PI / 2);
-            Assert.AreEqual(v.Angle, 3* Math.PI / 4 , 1e-5);
+            Assert.AreEqual(v.Angle, 3 * Math.PI / 4, 1e-5);
         }
-
 
         [TestMethod]
         public void Velocity_ChangeAngleSetsAngleFrom150DegTo30DegForVerticalPlane()
         {
-            Velocity v = new Velocity(1, 5* Math.PI / 6);
+            Velocity v = new Velocity(1, 5 * Math.PI / 6);
             v.ChangeAngle(Math.PI / 2);
             Assert.AreEqual(v.Angle, Math.PI / 6, 1e-5);
         }
 
         [TestMethod]
-        public void Velocity_ChangeAngleSetsAngleFromMinus45DegTo135DegForVerticalPlane()
+        public void Velocity_ChangeAngleSetsAngleFromMinus45DegToMinus135DegForVerticalPlane()
         {
-            Velocity v = new Velocity(1, - Math.PI / 4);
+            Velocity v = new Velocity(1, -Math.PI / 4);
             v.ChangeAngle(Math.PI / 2);
-            Assert.AreEqual(v.Angle, 5 * Math.PI / 6, 1e-5);
+            Assert.AreEqual(v.Angle, -3 * Math.PI / 4, 1e-5);
         }
 
         [TestMethod]
         public void Velocity_ChangeAngleSetsAngleFromMinus30DegToMinus150DegForVerticalPlane()
         {
-            Velocity v = new Velocity(1, 5 * -Math.PI / 6);
+            Velocity v = new Velocity(1, -Math.PI / 6);
             v.ChangeAngle(Math.PI / 2);
             Assert.AreEqual(v.Angle, -5 * Math.PI / 6, 1e-5);
         }
-
-
 
         [TestMethod]
         public void Velocity_ChangeAngleSetsAngleFrom45DegToMinus45DegForHorizontalPlane()
         {
             Velocity v = new Velocity(1, Math.PI / 4);
-            v.ChangeAngle(Math.PI / 2);
-            Assert.AreEqual(v.Angle,  -Math.PI / 4, 1e-5);
+            v.ChangeAngle(0);
+            Assert.AreEqual(v.Angle, -Math.PI / 4, 1e-5);
         }
-
 
         [TestMethod]
         public void Velocity_ChangeAngleSetsAngleFrom150DegToMinus150DegForHorizontalPlane()
         {
             Velocity v = new Velocity(1, 5 * Math.PI / 6);
-            v.ChangeAngle(Math.PI / 2);
-            Assert.AreEqual(- 5 * Math.PI / 6, v.Angle , 1e-5);
+            v.ChangeAngle(0);
+            Assert.AreEqual(v.Angle, - 5 * Math.PI / 6, 1e-5);
         }
 
         [TestMethod]
         public void Velocity_ChangeAngleSetsAngleFromMinus45DegTo45DegForHorizontalPlane()
         {
             Velocity v = new Velocity(1, -Math.PI / 4);
-            v.ChangeAngle(Math.PI / 2);
+            v.ChangeAngle(0);
             Assert.AreEqual(v.Angle, Math.PI / 4, 1e-5);
         }
 
         [TestMethod]
-        public void Velocity_ChangeAngleSetsAngleFromMinus30DegTo30DegForHorizontalPlane()
+        public void Velocity_ChangeAngleSetsAngleFromMinus30DegToMinus30DegForHorizontalPlane()
         {
-            Assert.IsTrue(true);
+            Velocity v = new Velocity(1, -Math.PI / 6);
+            v.ChangeAngle(0);
+            Assert.AreEqual(v.Angle, Math.PI / 6, 1e-5);
         }
+
     }
 }

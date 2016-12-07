@@ -18,12 +18,12 @@ namespace Vsite.Pood.BouncingBall
             if (det == 0)
                 return null;
 
-			double s = line1.C + line1.A * line0.P1.X + line1.B * line0.P1.Y;
-			// s = 0 means that line1 crosses starting point of line0
-			if (s == 0 || !IsFirstWithinRangeOfSecond(-s, det))
-				return null;
+            double s = line1.C + line1.A * line0.P1.X + line1.B * line0.P1.Y;
+            // s = 0 means that line1 crosses starting point of line0
+            if (s.IsAllmostEqual(0) || !IsFirstWithinRangeOfSecond(-s, det))
+                return null;
 
-			double t = line0.C + line0.A * line1.P1.X + line0.B * line1.P1.Y;
+            double t = line0.C + line0.A * line1.P1.X + line0.B * line1.P1.Y;
             if (!IsFirstWithinRangeOfSecond(t, det))
                 return null;
 
@@ -36,11 +36,12 @@ namespace Vsite.Pood.BouncingBall
         bool IsFirstWithinRangeOfSecond(double a, double b)
         {
             if (a >= 0 && b > 0)
-                return a <= b;
+                return a < b || a.IsAllmostEqual(b);
             if (a <= 0 && b < 0)
-                return a >= b;
+                return a > b || a.IsAllmostEqual(b);
             return false;
         }
+
 
         public IEnumerable<CollisionPoint> GetCollisionPoints(IEnumerable<CollisionPlane> planes)
         {
@@ -60,7 +61,7 @@ namespace Vsite.Pood.BouncingBall
             if (allCollisionPoints.Count() == 0)
                 return allCollisionPoints;
             double minimalDistance = allCollisionPoints.Min(cp => cp.Point.Distance(line0.P1));
-            return allCollisionPoints.Where(cp => cp.Point.Distance(line0.P1) == minimalDistance);
+            return allCollisionPoints.Where(cp => cp.Point.Distance(line0.P1).IsAllmostEqual(minimalDistance));
         }
 
         private Line line0;

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Pood.BouncingBall
 {
@@ -24,15 +20,14 @@ namespace Vsite.Pood.BouncingBall
 
         public void ChangeAngle(double planeAngle)
         {
-            if(angle<0)
-                angle = -angle - 2* planeAngle;
+            if (angle < 0)
+                angle = -angle - 2 * planeAngle;
             else
-                angle = -angle + 2* planeAngle;
+                angle = -angle + 2 * planeAngle;
             while (angle > Math.PI)
                 angle -= Math.PI;
             while (angle < -Math.PI)
                 angle += Math.PI;
-
         }
 
         public double TimeInSeconds(double distance)
@@ -47,6 +42,5 @@ namespace Vsite.Pood.BouncingBall
 
         private double speed;
         private double angle;
-
     }
 }

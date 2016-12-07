@@ -5,7 +5,7 @@ using Vsite.Pood.BouncingBall;
 namespace Vsite.Pood.BouncingBallTests
 {
     [TestClass]
-    public class PoinDTest
+    public class PointDTest
     {
         [TestMethod]
         public void PointD_DistanceReturns1ForToPointsPlacedHorizontally()

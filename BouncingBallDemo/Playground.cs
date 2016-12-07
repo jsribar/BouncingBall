@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Vsite.Pood.BouncingBall;
 
@@ -16,8 +18,8 @@ namespace Vsite.Pood.BouncingBallDemo
 
         public void InitTrajectory()
         {
-            Velocity vel = new Velocity(ballVelocity, Math.PI / 4);
-            PointD p0 = new PointD(0, 0);
+            Velocity vel = new Velocity(ballVelocity, Math.PI / 3);
+            PointD p0 = new PointD(10, 10);
             DateTime now = DateTime.Now;
             trajectory = new Trajectory(vel, p0, now);
             timerRefresh.Start();
@@ -27,11 +29,50 @@ namespace Vsite.Pood.BouncingBallDemo
         {
             if (trajectory == null)
                 return;
-            PointD newPosition = trajectory.GetNewPosition(DateTime.Now,planes);
-            pe.Graphics.FillEllipse(Brushes.Blue, GetBallBounds(newPosition));
+            PointD newPosition = trajectory.GetNewPosition(DateTime.Now, planes);
+
+            GraphicsPath path = new GraphicsPath();
+            RectangleF rect = new RectangleF((float)(newPosition.X - ballRadius),
+                                             (float)(newPosition.Y - ballRadius),
+                                             2 * ballRadius,
+                                             2 * ballRadius);
+            rect.Inflate(4, 4);
+            path.AddEllipse(rect);
+            using (PathGradientBrush pgb = new PathGradientBrush(path))
+            {
+                Color[] colors =
+                {
+                    Color.FromArgb(255, 127, 0, 0),
+                    Color.FromArgb(255, 200, 0, 0),
+                    Color.FromArgb(255, 255, 255, 255)
+                };
+                float[] relativePosition = { 0f, 0.4f, 1.0f };
+                ColorBlend cb = new ColorBlend();
+                cb.Colors = colors;
+                cb.Positions = relativePosition;
+                pgb.CenterPoint = new Point((int)(newPosition.X - 2), (int)(newPosition.Y - 2));
+                pgb.InterpolationColors = cb;
+                pe.Graphics.FillEllipse(pgb, GetBallBounds(newPosition));
+            }
         }
 
-        private void timerRefresh_Tick(object sender, EventArgs e)
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            float distance = ballRadius - 1;
+            planes = new List<CollisionPlane> {
+                new CollisionPlane(new PointD(0, distance), 
+                                   new PointD(ClientRectangle.Right, distance)),
+                new CollisionPlane(new PointD(ClientRectangle.Right - distance, 0), 
+                                   new PointD(ClientRectangle.Right - distance, ClientRectangle.Bottom)),
+                new CollisionPlane(new PointD(0, ClientRectangle.Bottom - distance), 
+                                   new PointD(ClientRectangle.Right, ClientRectangle.Bottom - distance)),
+                new CollisionPlane(new PointD(distance, 0), 
+                                   new PointD(distance, ClientRectangle.Bottom))
+        };
+    }
+
+    private void timerRefresh_Tick(object sender, EventArgs e)
         {
             Invalidate();
         }
@@ -47,9 +88,10 @@ namespace Vsite.Pood.BouncingBallDemo
         }
 
         private Trajectory trajectory = null;
-        private float ballRadius = 5;
+        private float ballRadius = 10;
         private double ballVelocity = 300;
 
-        private List<CollisionPlane> planes = new List<CollisionPlane> { new CollisionPlane(new PointD(200, 0), new PointD(200, 300)), new CollisionPlane(new PointD(0, 300), new PointD(300, 300)) };
+        private List<CollisionPlane> planes;
+
     }
 }
