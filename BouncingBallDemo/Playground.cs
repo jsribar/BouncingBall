@@ -28,7 +28,7 @@ namespace Vsite.Pood.BouncingBallDemo
         {
             if (trajectory == null)
                 return;
-            PointD newPosition = trajectory.GetNewPosition(DateTime.Now, planes);
+            PointD newPosition = trajectory.GetNewPosition(DateTime.Now, walls);
 
             GraphicsPath path = new GraphicsPath();
             RectangleF rect = new RectangleF((float)(newPosition.X - ballRadius), (float)(newPosition.Y - ballRadius), 2 * ballRadius, 2 * ballRadius);
@@ -59,7 +59,7 @@ namespace Vsite.Pood.BouncingBallDemo
             base.OnSizeChanged(e);
 
             float distance = ballRadius - 1;
-            planes = new List<CollisionPlane>
+            walls = new List<CollisionPlane>
             {
                 new CollisionPlane(new PointD(0, distance), new PointD(ClientRectangle.Right, distance)),
                 new CollisionPlane(new PointD(ClientRectangle.Right - distance, 0), new PointD(ClientRectangle.Right - distance, ClientRectangle.Bottom)),
@@ -87,6 +87,8 @@ namespace Vsite.Pood.BouncingBallDemo
         private float ballRadius = 10;
         private double ballVelocity = 300;
 
-        private List<CollisionPlane> planes;
+        PathGradientBrush ballBrush;
+        private List<CollisionPlane> walls;
+        private List<ICollisionObject> destroyableObstacles = new List<ICollisionObject>();
     }
 }
