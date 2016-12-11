@@ -6,13 +6,18 @@ namespace Vsite.Pood.BouncingBall
 {
     class CollisionPoint
     {
-        public CollisionPoint(CollisionPlane plane, PointD point)
+        public CollisionPoint(ICollisionObject plane, PointD point)
         {
             Plane = plane;
             Point = point;
         }
 
-        public readonly CollisionPlane Plane;
+        public Velocity ChangeVelocity(Velocity vel)
+        {
+            return Plane.ChangeVelocity(vel);
+        }
+
+        public readonly ICollisionObject Plane;
         public readonly PointD Point;
     }
 }
