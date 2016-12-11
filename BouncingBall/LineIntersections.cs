@@ -9,18 +9,14 @@ namespace Vsite.Pood.BouncingBall
     {
         public LineIntersections(Line line)
         {
-            this.line0 = line;
+            this.line = line;
         }
 
-        public IEnumerable<CollisionPoint> GetCollisionPoints(IEnumerable<ICollisionObject> planes)
+        public IEnumerable<CollisionPoint> GetCollisionPoints(IEnumerable<ICollisionObject> collisionObjects)
         {
             List<CollisionPoint> collisionPoints = new List<CollisionPoint>();
-            foreach (ICollisionObject plane in planes)
-            {
-                IEnumerable<PointD> intersections = plane.GetIntersections(line0);
-                foreach (PointD intersection in intersections)
-                    collisionPoints.Add(new CollisionPoint(plane, intersection));
-            }
+            foreach (ICollisionObject collisionObject in collisionObjects)
+                collisionPoints.AddRange(collisionObject.GetCollisionPoints(line));
             return collisionPoints;
         }
 
@@ -29,10 +25,10 @@ namespace Vsite.Pood.BouncingBall
             IEnumerable<CollisionPoint> allCollisionPoints = GetCollisionPoints(planes);
             if (allCollisionPoints.Count() == 0)
                 return allCollisionPoints;
-            double minimalDistance = allCollisionPoints.Min(cp => cp.Point.Distance(line0.P1));
-            return allCollisionPoints.Where(cp => cp.Point.Distance(line0.P1).IsAllmostEqual(minimalDistance));
+            double minimalDistance = allCollisionPoints.Min(cp => cp.Point.Distance(line.P1));
+            return allCollisionPoints.Where(cp => cp.Point.Distance(line.P1).IsAllmostEqual(minimalDistance));
         }
 
-        public readonly Line line0;
+        public readonly Line line;
     }
 }

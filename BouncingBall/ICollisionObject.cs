@@ -6,7 +6,7 @@ namespace Vsite.Pood.BouncingBall
 {
     interface ICollisionObject
     {
-        IEnumerable<PointD> GetIntersections(Line line);
+        IEnumerable<CollisionPoint> GetCollisionPoints(Line line);
 
         Velocity ChangeVelocity(Velocity vel);
     }
