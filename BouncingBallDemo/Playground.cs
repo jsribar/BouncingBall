@@ -61,8 +61,8 @@ namespace Vsite.Pood.BouncingBallDemo
             ballBrush = new PathGradientBrush(path);
             Color[] colors =
             {
-                Color.FromArgb(255, 127, 0, 0),
-                Color.FromArgb(255, 200, 0, 0),
+                Color.FromArgb(255, 0, 0, 127),
+                Color.FromArgb(255, 0, 0, 200),
                 Color.FromArgb(255, 255, 255, 255)
             };
             float[] relativePosition = { 0f, 0.4f, 1.0f };

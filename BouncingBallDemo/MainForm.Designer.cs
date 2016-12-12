@@ -33,7 +33,7 @@
             // 
             // playground1
             // 
-            this.playground1.BackColor = System.Drawing.SystemColors.Window;
+            this.playground1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.playground1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playground1.Location = new System.Drawing.Point(0, 0);
             this.playground1.Name = "playground1";
