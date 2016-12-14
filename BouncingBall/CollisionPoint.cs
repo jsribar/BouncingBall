@@ -10,7 +10,7 @@
 
         public Velocity ChangeVelocity(Velocity vel)
         {
-            return CollisionObject.ChangeVelocity(vel, this);
+            return CollisionObject.Hit(vel, this);
         }
 
         public readonly ICollisionObject CollisionObject;

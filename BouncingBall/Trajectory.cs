@@ -21,7 +21,7 @@ namespace Vsite.Pood.BouncingBall
             return velocity.GetNewPosition(startingPoint, seconds);
         }
 
-        public PointD GetNewPosition(DateTime endTime, IEnumerable<CollisionPlane> collisionPlanes)
+        public PointD GetNewPosition(DateTime endTime, IEnumerable<ICollisionObject> collisionPlanes)
         {
             while (true)
             {
