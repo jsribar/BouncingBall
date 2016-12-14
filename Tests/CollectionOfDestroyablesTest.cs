@@ -1,6 +1,7 @@
 ﻿using System;
 using Vsite.Pood.BouncingBall;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Vsite.Pood.BouncingBallTests
 {
@@ -8,9 +9,19 @@ namespace Vsite.Pood.BouncingBallTests
     {
         public event EventHandler Destroy;
 
+        public IEnumerable<CollisionPoint> GetCollisionPoints(Line line)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Hit()
         {
             Destroy?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Velocity Hit(Velocity vel, CollisionPoint point)
+        {
+            throw new NotImplementedException();
         }
     }
 
