@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CrashBrickTest.cs" />
     <Compile Include="LineInterSectionsTest.cs" />
     <Compile Include="LineTest.cs" />
     <Compile Include="PointDTest.cs" />

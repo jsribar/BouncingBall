@@ -11,7 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CollisionPlane.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CollisionPoint.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DestroyableBrick.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrashBrick.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DoubleExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICollisionObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Line.cs" />

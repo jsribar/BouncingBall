@@ -20,7 +20,7 @@ namespace Vsite.Pood.BouncingBall
             return collisionPoints;
         }
 
-        public Velocity ChangeVelocity(Velocity vel)
+        public Velocity ChangeVelocity(Velocity vel, CollisionPoint point)
         {
             double angle = vel.Angle;
             if (angle < 0)
