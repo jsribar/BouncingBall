@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Vsite.Pood.BouncingBall
 {
@@ -22,16 +21,6 @@ namespace Vsite.Pood.BouncingBall
             throw new NotImplementedException();
         }
 
-        public IEnumerable<PointD> GetIntersections(Line line)
-        {
-            List<PointD> points = new List<PointD>();
-            foreach (CollisionPlane plane in outerPlanes)
-            {
-                points.AddRange(plane.GetIntersections(line));
-            }
-            return points;
-        }
-
         private List<CollisionPlane> CreateOuterPlanes(double xLeft, double yTop, double xRight, double yBottom)
         {
             List<CollisionPlane> planes = new List<CollisionPlane>();
@@ -39,8 +28,17 @@ namespace Vsite.Pood.BouncingBall
             planes.Add(new CollisionPlane(new PointD(xRight, yTop), new PointD(xRight, yBottom)));
             planes.Add(new CollisionPlane(new PointD(xLeft, yBottom), new PointD(xRight, yBottom)));
             planes.Add(new CollisionPlane(new PointD(xLeft, yTop), new PointD(xLeft, yBottom)));
-
             return planes;
+        }
+
+        public IEnumerable<CollisionPoint> GetCollisionPoints(Line line)
+        {
+            List<CollisionPoint> points = new List<CollisionPoint>();
+            foreach (CollisionPlane plane in outerPlanes)
+            {
+                points.AddRange(plane.GetCollisionPoints(line));
+            }
+            return points;
         }
 
         private List<CollisionPlane> outerPlanes;

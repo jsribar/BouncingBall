@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Vsite.Pood.BouncingBall;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 
 namespace Vsite.Pood.BouncingBallDemo
 {
@@ -13,6 +14,7 @@ namespace Vsite.Pood.BouncingBallDemo
         {
             InitializeComponent();
             DoubleBuffered = true;
+            ballBrush = CreateBallBrush();
         }
 
         public void InitTrajectory()
@@ -29,43 +31,54 @@ namespace Vsite.Pood.BouncingBallDemo
             if (trajectory == null)
                 return;
             PointD newPosition = trajectory.GetNewPosition(DateTime.Now, walls);
-
-            GraphicsPath path = new GraphicsPath();
-            RectangleF rect = new RectangleF((float)(newPosition.X - ballRadius), (float)(newPosition.Y - ballRadius), 2 * ballRadius, 2 * ballRadius);
-            rect.Inflate(4, 4);
-            path.AddEllipse(rect);
-            using (PathGradientBrush pgb = new PathGradientBrush(path))
-            {
-                Color[] colors =
-            {
-                Color.FromArgb(255, 127, 0, 0),
-                Color.FromArgb(255, 200, 0, 0),
-                Color.FromArgb(255, 255, 255, 255)
-            };
-                float[] relativePosition = { 0f, 0.4f, 1.0f };
-                ColorBlend cb = new ColorBlend();
-                cb.Colors = colors;
-                cb.Positions = relativePosition;
-                pgb.CenterPoint = new Point((int)newPosition.X - 2, (int)newPosition.Y - 2);
-                pgb.InterpolationColors = cb;
-                pe.Graphics.FillEllipse(pgb, GetBallBounds(newPosition));
-            }
-            //pgb.CenterColor = Color.FromArgb(255, 255, 255, 255);
-            
+            pe.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            using (Brush b = MoveBrush(newPosition))
+                pe.Graphics.FillEllipse(b, GetBallBounds(newPosition));
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-
             float distance = ballRadius - 1;
-            walls = new List<CollisionPlane>
-            {
-                new CollisionPlane(new PointD(0, distance), new PointD(ClientRectangle.Right, distance)),
-                new CollisionPlane(new PointD(ClientRectangle.Right - distance, 0), new PointD(ClientRectangle.Right - distance, ClientRectangle.Bottom)),
-                new CollisionPlane(new PointD(0, ClientRectangle.Bottom - distance), new PointD(ClientRectangle.Right, ClientRectangle.Bottom - distance)),
-                new CollisionPlane(new PointD(distance, 0), new PointD(distance, ClientRectangle.Bottom))
+            walls = new List<CollisionPlane> {
+                new CollisionPlane(new PointD(0, distance), 
+                                   new PointD(ClientRectangle.Right, distance)),
+                new CollisionPlane(new PointD(ClientRectangle.Right - distance, 0), 
+                                   new PointD(ClientRectangle.Right - distance, ClientRectangle.Bottom)),
+                new CollisionPlane(new PointD(0, ClientRectangle.Bottom - distance), 
+                                   new PointD(ClientRectangle.Right, ClientRectangle.Bottom - distance)),
+                new CollisionPlane(new PointD(distance, 0), 
+                                   new PointD(distance, ClientRectangle.Bottom))
             };
+        }
+
+        private PathGradientBrush CreateBallBrush()
+        {
+            GraphicsPath path = new GraphicsPath();
+            RectangleF rect = new RectangleF(-ballRadius, -ballRadius, 2 * ballRadius, 2 * ballRadius);
+            rect.Inflate(4, 4);
+            path.AddEllipse(rect);
+            ballBrush = new PathGradientBrush(path);
+            Color[] colors =
+            {
+                Color.FromArgb(255, 0, 0, 127),
+                Color.FromArgb(255, 0, 0, 200),
+                Color.FromArgb(255, 255, 255, 255)
+            };
+            float[] relativePosition = { 0f, 0.4f, 1.0f };
+            ColorBlend cb = new ColorBlend();
+            cb.Colors = colors;
+            cb.Positions = relativePosition;
+            ballBrush.CenterPoint = new Point(-2, -2);
+            ballBrush.InterpolationColors = cb;
+            return ballBrush;
+        }
+
+        private Brush MoveBrush(PointD point)
+        {
+            PathGradientBrush b = (PathGradientBrush)ballBrush.Clone();
+            b.TranslateTransform((float)point.X, (float)point.Y);
+            return b;
         }
 
         private void timerRefresh_Tick(object sender, EventArgs e)
@@ -90,5 +103,6 @@ namespace Vsite.Pood.BouncingBallDemo
         PathGradientBrush ballBrush;
         private List<CollisionPlane> walls;
         private List<ICollisionObject> destroyableObstacles = new List<ICollisionObject>();
+
     }
 }
