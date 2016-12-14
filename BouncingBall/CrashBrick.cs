@@ -1,24 +1,26 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Vsite.Pood.BouncingBall
 {
-    class DestroyableBrick : ICollisionObject
+    class CrashBrick : ICollisionObject
     {
-        public DestroyableBrick(PointD leftTop, PointD rightBottom, double ballRadius)
+        public CrashBrick(PointD leftTop, PointD rightBottom, double ballRadius)
         {
             LeftTop = leftTop;
             RightBottom = rightBottom;
-            double yTop = leftTop.Y - ballRadius;
+            double yTop = leftTop.Y + ballRadius;
             double xLeft = leftTop.X - ballRadius;
-            double yBottom = rightBottom.Y + ballRadius;
+            double yBottom = rightBottom.Y - ballRadius;
             double xRight = rightBottom.X + ballRadius;
             outerPlanes = CreateOuterPlanes(xLeft, yTop, xRight, yBottom);
         }
 
-        public Velocity ChangeVelocity(Velocity vel)
+        public Velocity ChangeVelocity(Velocity vel, CollisionPoint point)
         {
-            throw new NotImplementedException();
+            CollisionPlane p = outerPlanes.First(plane => plane == point.CollisionObject);
+            return p.ChangeVelocity(vel, point);
         }
 
         private List<CollisionPlane> CreateOuterPlanes(double xLeft, double yTop, double xRight, double yBottom)
