@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Vsite.Pood.BouncingBall
+﻿namespace Vsite.Pood.BouncingBall
 {
     class CollisionPoint
     {
-        public CollisionPoint(ICollisionObject plane, PointD point)
+        public CollisionPoint(ICollisionObject collisionObject, PointD point)
         {
-            Plane = plane;
+            CollisionObject = collisionObject;
             Point = point;
         }
-        public readonly ICollisionObject Plane;
+
+        public Velocity ChangeVelocity(Velocity vel)
+        {
+            return CollisionObject.ChangeVelocity(vel);
+        }
+
+        public readonly ICollisionObject CollisionObject;
         public readonly PointD Point;
     }
-
 }
-
