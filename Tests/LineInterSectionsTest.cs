@@ -14,10 +14,12 @@ namespace Vsite.Pood.BouncingBallTests
         {
             Line horizontal = new Line(new PointD(5, 3), new PointD(9, 3));
             LineIntersections li = new LineIntersections(horizontal);
-            Line vertical = new Line(new PointD(6, 2), new PointD(6, 7));
-            PointD p = li.GetIntersection(vertical);
-            Assert.AreEqual(6, p.X, 1e-5);
-            Assert.AreEqual(3, p.Y, 1e-5);
+            CollisionPlane cp = new CollisionPlane(new PointD(6, 2), new PointD(6, 7));
+            IEnumerable<PointD> points = cp.GetIntersections(li.line0);
+            Assert.AreEqual(1, points.Count());
+            PointD point = points.First();
+            Assert.AreEqual(6, point.X, 1e-5);
+            Assert.AreEqual(3, point.Y, 1e-5);
         }
 
         [TestMethod]
@@ -26,7 +28,7 @@ namespace Vsite.Pood.BouncingBallTests
             Line horizontal = new Line(new PointD(5, 3), new PointD(5, 7));
             LineIntersections li = new LineIntersections(horizontal);
             Line vertical = new Line(new PointD(6, 4), new PointD(6, 7));
-            Assert.IsNull(li.GetIntersection(vertical));
+            Assert.IsNull(li.GetIntersections(vertical));
         }
 
         [TestMethod]
@@ -35,6 +37,10 @@ namespace Vsite.Pood.BouncingBallTests
             Line horizontal1 = new Line(new PointD(5, 3), new PointD(9, 3));
             LineIntersections li = new LineIntersections(horizontal1);
             Line horizontal2 = new Line(new PointD(5, 4), new PointD(9, 4));
+            CollisionPlane cp = new CollisionPlane(new PointD(6, 2), new PointD(6, 7));
+            IEnumerable<PointD> points = cp.GetIntersections(li.line0);
+            Assert.AreEqual(1, points.Count());
+            PointD point = points.First();
             Assert.IsNull(li.GetIntersection(horizontal2));
         }
 
