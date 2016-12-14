@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,10 +18,10 @@ namespace Vsite.Pood.BouncingBall
             outerPlanes = CreateOuterPlanes(xLeft, yTop, xRight, yBottom);
         }
 
-        public Velocity ChangeVelocity(Velocity vel, CollisionPoint point)
+        public virtual Velocity Hit(Velocity vel, CollisionPoint point)
         {
             CollisionPlane p = outerPlanes.First(plane => plane == point.CollisionObject);
-            return p.ChangeVelocity(vel, point);
+            return p.Hit(vel, point);
         }
 
         private List<CollisionPlane> CreateOuterPlanes(double xLeft, double yTop, double xRight, double yBottom)
