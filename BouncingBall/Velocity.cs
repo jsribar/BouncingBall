@@ -39,10 +39,6 @@ namespace Vsite.Pood.BouncingBall
         {
             get { return angle; }
         }
-        public double Speed
-        {
-            get { return speed; }
-        }
 
         public double Speed
         {
