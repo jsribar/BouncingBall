@@ -8,7 +8,5 @@ namespace Vsite.Pood.BouncingBall
     {
         IEnumerable<CollisionPoint> GetCollisionPoints(Line line);
 
-        Velocity Hit(Velocity vel, CollisionPoint point);
-
     }
 }
