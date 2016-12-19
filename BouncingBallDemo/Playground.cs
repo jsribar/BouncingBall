@@ -15,6 +15,14 @@ namespace Vsite.Pood.BouncingBallDemo
             InitializeComponent();
             DoubleBuffered = true;
             ballBrush = CreateBallBrush();
+            CreateBricks();
+        }
+
+        private void CreateBricks()
+        {
+            bricks.Add(new DestroyableBrick(new PointD(100, 100), new PointD(200, 200), ballRadius));
+            bricks.Add(new DestroyableBrick(new PointD(300, 200), new PointD(400, 300), ballRadius));
+            bricks.Add(new DestroyableBrick(new PointD(100, 400), new PointD(200, 500), ballRadius));
         }
 
         public void InitTrajectory()
@@ -30,7 +38,7 @@ namespace Vsite.Pood.BouncingBallDemo
         {
             if (trajectory == null)
                 return;
-            PointD newPosition = trajectory.GetNewPosition(DateTime.Now, walls);
+            PointD newPosition = trajectory.GetNewPosition(DateTime.Now, obstacles);
             pe.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
             using (Brush b = MoveBrush(newPosition))
                 pe.Graphics.FillEllipse(b, GetBallBounds(newPosition));
@@ -50,6 +58,9 @@ namespace Vsite.Pood.BouncingBallDemo
                 new CollisionPlane(new PointD(distance, 0), 
                                    new PointD(distance, ClientRectangle.Bottom))
             };
+            obstacles.Clear();
+            obstacles.AddRange(walls);
+            obstacles.AddRange(bricks.Items);
         }
 
         private PathGradientBrush CreateBallBrush()
@@ -102,7 +113,8 @@ namespace Vsite.Pood.BouncingBallDemo
 
         PathGradientBrush ballBrush;
         private List<CollisionPlane> walls;
-        private List<ICollisionObject> destroyableObstacles = new List<ICollisionObject>();
+        private CollectionOfDestroyables bricks = new CollectionOfDestroyables();
+        private List<ICollisionObject> obstacles = new List<ICollisionObject>();
 
     }
 }
