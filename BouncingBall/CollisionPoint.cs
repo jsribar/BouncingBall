@@ -2,18 +2,18 @@
 {
     class CollisionPoint
     {
-        public CollisionPoint(ICollisionObject collisionObject, PointD point)
+        public CollisionPoint(IHittable hittableObject, PointD point)
         {
-            CollisionObject = collisionObject;
+            HittableObject = hittableObject;
             Point = point;
         }
 
-        public Velocity ChangeVelocity(Velocity vel)
+        public Velocity DoHit(Velocity vel)
         {
-            return CollisionObject.ChangeVelocity(vel, this);
+            return HittableObject.DoHit(vel, this);
         }
 
-        public readonly ICollisionObject CollisionObject;
+        public readonly IHittable HittableObject;
         public readonly PointD Point;
     }
 }

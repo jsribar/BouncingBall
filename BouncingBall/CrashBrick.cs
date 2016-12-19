@@ -17,12 +17,6 @@ namespace Vsite.Pood.BouncingBall
             outerPlanes = CreateOuterPlanes(xLeft, yTop, xRight, yBottom);
         }
 
-        public Velocity ChangeVelocity(Velocity vel, CollisionPoint point)
-        {
-            CollisionPlane p = outerPlanes.First(plane => plane == point.CollisionObject);
-            return p.ChangeVelocity(vel, point);
-        }
-
         private List<CollisionPlane> CreateOuterPlanes(double xLeft, double yTop, double xRight, double yBottom)
         {
             List<CollisionPlane> planes = new List<CollisionPlane>();

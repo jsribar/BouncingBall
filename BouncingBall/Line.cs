@@ -14,6 +14,7 @@ namespace Vsite.Pood.BouncingBall
             A = p2.Y - p1.Y;
             B = p1.X - p2.X;
             C = - A * p1.X - B * p1.Y;
+            Angle = Math.Atan2(p2.Y - p1.Y, p2.X - p1.X);
         }
 
         public IEnumerable<PointD> GetIntersections(Line line)
@@ -53,5 +54,6 @@ namespace Vsite.Pood.BouncingBall
         public readonly double C;
         public readonly PointD P1;
         public readonly PointD P2;
+        public readonly double Angle;
     }
 }

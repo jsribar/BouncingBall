@@ -13,7 +13,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)CollisionPoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrashBrick.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DoubleExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HittableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICollisionObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHittable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Line.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LineIntersections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PointD.cs" />
