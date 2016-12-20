@@ -6,6 +6,16 @@ namespace Vsite.Pood.BouncingBall
 {
     class CollectionOfDestroyables
     {
+        public class DestroyedItemEventArgs : EventArgs
+        {
+            public DestroyedItemEventArgs(IDestroyNotifier destroyedItem)
+            {
+                DestroyedItem = destroyedItem;
+            }
+
+            public readonly IDestroyNotifier DestroyedItem;
+        }
+
         public void Add(IDestroyNotifier item)
         {
             items.Add(item);
@@ -17,14 +27,14 @@ namespace Vsite.Pood.BouncingBall
             get { return items.Count; }
         }
 
-        public event EventHandler ItemDestroyed;
+        public event EventHandler<DestroyedItemEventArgs> ItemDestroyed;
 
         private void ItemDestroy(object sender, EventArgs e)
         {
             IDestroyNotifier item = (IDestroyNotifier)sender;
             item.Destroy -= ItemDestroy;
             items.Remove(item);
-            ItemDestroyed?.Invoke(this, EventArgs.Empty);
+            ItemDestroyed?.Invoke(this, new DestroyedItemEventArgs(item));
         }
 
         public IEnumerable<ICollisionObject> Items

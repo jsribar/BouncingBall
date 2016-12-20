@@ -23,7 +23,7 @@ namespace Vsite.Pood.BouncingBallDemo
             bricks.Add(new DestroyableBrick(new PointD(100, 100), new PointD(200, 200), ballRadius));
             bricks.Add(new DestroyableBrick(new PointD(300, 200), new PointD(400, 300), ballRadius));
             bricks.Add(new DestroyableBrick(new PointD(100, 400), new PointD(200, 500), ballRadius));
-            bricks.ItemDestroyed += OnBrickDestroyed;
+            bricks.ItemDestroyed += OnObstacleDestroyed;
         }
 
         public void InitTrajectory()
@@ -108,11 +108,9 @@ namespace Vsite.Pood.BouncingBallDemo
             InitTrajectory();
         }
 
-        private void OnBrickDestroyed(object sender, EventArgs args)
+        private void OnObstacleDestroyed(object sender, CollectionOfDestroyables.DestroyedItemEventArgs args)
         {
-            obstacles.Clear();
-            obstacles.AddRange(walls);
-            obstacles.AddRange(bricks.Items);
+            obstacles.Remove(args.DestroyedItem);
         }
 
         private Trajectory trajectory = null;
