@@ -19,11 +19,5 @@ namespace Vsite.Pood.BouncingBall
         }
 
         public event EventHandler Destroy;
-
-        //public override Velocity Hit(Velocity vel, CollisionPoint point)
-        //{
-        //    Destroy?.Invoke(this, EventArgs.Empty);
-        //    return base.Hit(vel, point);
-        //}
     }
 }

@@ -12,16 +12,19 @@ namespace Vsite.Pood.BouncingBall
             item.Destroy += ItemDestroy;
         }
 
+        public int Count
+        {
+            get { return items.Count; }
+        }
+
+        public event EventHandler ItemDestroyed;
+
         private void ItemDestroy(object sender, EventArgs e)
         {
             IDestroyNotifier item = (IDestroyNotifier)sender;
             item.Destroy -= ItemDestroy;
             items.Remove(item);
-        }
-
-        public int Count
-        {
-            get { return items.Count; }
+            ItemDestroyed?.Invoke(this, EventArgs.Empty);
         }
 
         public IEnumerable<ICollisionObject> Items
