@@ -18,9 +18,6 @@ namespace Vsite.Pood.BouncingBallDemo
             DoubleBuffered = true;
             ballBrush = CreateBallBrush();
             CreateDestroyableBricks();
-
-            player.SoundLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"Media\Windows Ding.wav");
-            player.Load();
         }
 
         private void CreateDestroyableBricks()
@@ -132,7 +129,7 @@ namespace Vsite.Pood.BouncingBallDemo
         private void OnObstacleDestroyed(object sender, CollectionOfDestroyables.DestroyedItemEventArgs args)
         {
             obstacles.Remove(args.DestroyedItem);
-            player.Play();
+            dingSound.Play();
         }
 
         private Trajectory trajectory = null;
@@ -144,6 +141,6 @@ namespace Vsite.Pood.BouncingBallDemo
         private CollectionOfDestroyables bricks = new CollectionOfDestroyables();
         private List<ICollisionObject> obstacles = new List<ICollisionObject>();
 
-        SoundPlayer player = new SoundPlayer();
+        SoundPlayer dingSound = new SoundPlayer(Vsite.Pood.BouncingBallDemo.Resource.Windows_Ding);
     }
 }
