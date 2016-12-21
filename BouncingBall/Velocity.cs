@@ -18,7 +18,7 @@ namespace Vsite.Pood.BouncingBall
             return new PointD(starting.X + deltaX, starting.Y + deltaY);
         }
 
-        public void ChangeAngle(double planeAngle)
+        public void Bounce(double planeAngle)
         {
             if (angle < 0)
                 angle = -angle - 2 * planeAngle;

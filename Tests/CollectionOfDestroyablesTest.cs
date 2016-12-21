@@ -1,7 +1,7 @@
 ﻿using System;
-using Vsite.Pood.BouncingBall;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Vsite.Pood.BouncingBall;
 
 namespace Vsite.Pood.BouncingBallTests
 {
@@ -42,12 +42,9 @@ namespace Vsite.Pood.BouncingBallTests
         {
             CollectionOfDestroyables col = new CollectionOfDestroyables();
             Destroyable d = new Destroyable();
-
             col.Add(d);
             Assert.AreEqual(1, col.Count);
-
             d.Hit();
-
             Assert.AreEqual(0, col.Count);
         }
     }

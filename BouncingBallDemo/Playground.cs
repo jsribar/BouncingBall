@@ -15,14 +15,15 @@ namespace Vsite.Pood.BouncingBallDemo
             InitializeComponent();
             DoubleBuffered = true;
             ballBrush = CreateBallBrush();
-            CreateBricks();
+            CreateDestroyableBricks();
         }
 
-        private void CreateBricks()
+        private void CreateDestroyableBricks()
         {
-            bricks.Add(new DestroyableBrick(new BouncingBall.PointD(100, 100), new PointD(200,200),ballRadius));
-            bricks.Add(new DestroyableBrick(new BouncingBall.PointD(300, 200), new PointD(400, 300), ballRadius));
-            bricks.Add(new DestroyableBrick(new BouncingBall.PointD(100, 400), new PointD(200, 500), ballRadius));
+            bricks.Add(new DestroyableBrick(new PointD(100, 100), new PointD(200, 200), ballRadius));
+            bricks.Add(new DestroyableBrick(new PointD(300, 200), new PointD(400, 300), ballRadius));
+            bricks.Add(new DestroyableBrick(new PointD(100, 400), new PointD(200, 500), ballRadius));
+            bricks.ItemDestroyed += OnObstacleDestroyed;
         }
 
         public void InitTrajectory()
@@ -105,6 +106,11 @@ namespace Vsite.Pood.BouncingBallDemo
         private void Playground_Click(object sender, EventArgs e)
         {
             InitTrajectory();
+        }
+
+        private void OnObstacleDestroyed(object sender, CollectionOfDestroyables.DestroyedItemEventArgs args)
+        {
+            obstacles.Remove(args.DestroyedItem);
         }
 
         private Trajectory trajectory = null;
