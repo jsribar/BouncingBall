@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Vsite.Pood.BouncingBall
 {
@@ -14,13 +14,7 @@ namespace Vsite.Pood.BouncingBall
             double xLeft = leftTop.X - ballRadius;
             double yBottom = rightBottom.Y - ballRadius;
             double xRight = rightBottom.X + ballRadius;
-            outerPlanes = CreateOuterPlanes(xLeft, yTop, xRight, yBottom);
-        }
-
-        public virtual Velocity Hit(Velocity vel, CollisionPoint point)
-        {
-            CollisionPlane p = outerPlanes.First(plane => plane == point.CollisionObject);
-            return p.Hit(vel, point);
+            collisionPlanes = CreateOuterPlanes(xLeft, yTop, xRight, yBottom);
         }
 
         private List<CollisionPlane> CreateOuterPlanes(double xLeft, double yTop, double xRight, double yBottom)
@@ -36,14 +30,19 @@ namespace Vsite.Pood.BouncingBall
         public IEnumerable<CollisionPoint> GetCollisionPoints(Line line)
         {
             List<CollisionPoint> points = new List<CollisionPoint>();
-            foreach (CollisionPlane plane in outerPlanes)
+            foreach (CollisionPlane plane in collisionPlanes)
             {
                 points.AddRange(plane.GetCollisionPoints(line));
             }
             return points;
         }
 
-        private List<CollisionPlane> outerPlanes;
+        protected IEnumerable<CollisionPlane> CollisionPlanes
+        {
+            get { return collisionPlanes; }
+        }
+
+        private List<CollisionPlane> collisionPlanes;
         public readonly PointD LeftTop;
         public readonly PointD RightBottom;
     }

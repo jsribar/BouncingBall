@@ -21,7 +21,7 @@ namespace Vsite.Pood.BouncingBallTests
             Assert.IsTrue(point1.Point.X.IsAllmostEqual(2) || point1.Point.X.IsAllmostEqual(9));
             Assert.IsTrue(point1.Point.Y.IsAllmostEqual(5));
             var point2 = collisionPoints.ElementAt(1);
-            Assert.IsTrue(point2.Point.X.IsAllmostEqual(2) || point1.Point.X.IsAllmostEqual(9));
+            Assert.IsTrue(point2.Point.X.IsAllmostEqual(2) || point2.Point.X.IsAllmostEqual(9));
             Assert.IsTrue(point2.Point.Y.IsAllmostEqual(5));
         }
     }

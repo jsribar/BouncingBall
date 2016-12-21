@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Vsite.Pood.BouncingBall
 {
@@ -8,6 +6,5 @@ namespace Vsite.Pood.BouncingBall
     {
         IEnumerable<CollisionPoint> GetCollisionPoints(Line line);
 
-        Velocity Hit(Velocity vel, CollisionPoint point);
     }
 }

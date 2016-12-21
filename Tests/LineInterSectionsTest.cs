@@ -89,7 +89,7 @@ namespace Vsite.Pood.BouncingBallTests
             List<CollisionPlane> collisionPlanes = new List<CollisionPlane> { plane1, plane2 };
             var collisionPoints = li.GetClosestCollisionPoints(collisionPlanes);
             Assert.AreEqual(1, collisionPoints.Count());
-            Assert.AreEqual(plane2, collisionPoints.First().CollisionObject);
+            Assert.AreEqual(plane2, collisionPoints.First().HittableObject);
             Assert.AreEqual(2, collisionPoints.First().Point.X);
             Assert.AreEqual(2, collisionPoints.First().Point.Y);
         }
@@ -104,8 +104,8 @@ namespace Vsite.Pood.BouncingBallTests
             List<CollisionPlane> collisionPlanes = new List<CollisionPlane> { plane1, plane2 };
             var collisionPoints = li.GetClosestCollisionPoints(collisionPlanes);
             Assert.AreEqual(2, collisionPoints.Count());
-            Assert.IsNotNull(collisionPoints.FirstOrDefault(cp => cp.CollisionObject == plane1));
-            Assert.IsNotNull(collisionPoints.FirstOrDefault(cp => cp.CollisionObject == plane2));
+            Assert.IsNotNull(collisionPoints.FirstOrDefault(cp => cp.HittableObject == plane1));
+            Assert.IsNotNull(collisionPoints.FirstOrDefault(cp => cp.HittableObject == plane2));
         }
 
         [TestMethod]

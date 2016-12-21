@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace Vsite.Pood.BouncingBall
 {
@@ -35,7 +33,7 @@ namespace Vsite.Pood.BouncingBall
                 startingPoint = collisionPoints.First().Point;
                 startingTime = startingTime.AddSeconds(time);
                 foreach (CollisionPoint cp in collisionPoints)
-                    velocity = cp.ChangeVelocity(velocity);
+                    velocity = cp.DoHit(velocity);
             }
         }
 
