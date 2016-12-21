@@ -10,9 +10,9 @@ namespace Vsite.Pood.BouncingBall
         {
             LeftTop = leftTop;
             RightBottom = rightBottom;
-            double yTop = leftTop.Y + ballRadius;
+            double yTop = leftTop.Y - ballRadius;
             double xLeft = leftTop.X - ballRadius;
-            double yBottom = rightBottom.Y - ballRadius;
+            double yBottom = rightBottom.Y + ballRadius;
             double xRight = rightBottom.X + ballRadius;
             collisionPlanes = CreateOuterPlanes(xLeft, yTop, xRight, yBottom);
         }

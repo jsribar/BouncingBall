@@ -20,9 +20,9 @@ namespace Vsite.Pood.BouncingBallDemo
 
         private void CreateDestroyableBricks()
         {
-            bricks.Add(new DestroyableBrick(new PointD(100, 100), new PointD(200, 200), ballRadius));
-            bricks.Add(new DestroyableBrick(new PointD(300, 200), new PointD(400, 300), ballRadius));
-            bricks.Add(new DestroyableBrick(new PointD(100, 400), new PointD(200, 500), ballRadius));
+            bricks.Add(new VisibleDestroyableBrick(new PointD(100, 100), new PointD(200, 200), ballRadius));
+            bricks.Add(new VisibleDestroyableBrick(new PointD(300, 200), new PointD(400, 300), ballRadius));
+            bricks.Add(new VisibleDestroyableBrick(new PointD(100, 400), new PointD(200, 500), ballRadius));
             bricks.ItemDestroyed += OnObstacleDestroyed;
         }
 
@@ -37,6 +37,8 @@ namespace Vsite.Pood.BouncingBallDemo
 
         protected override void OnPaint(PaintEventArgs pe)
         {
+            foreach (VisibleDestroyableBrick b in bricks.Items)
+                b.Draw(pe.Graphics);
             if (trajectory == null)
                 return;
             PointD newPosition = trajectory.GetNewPosition(DateTime.Now, obstacles);
