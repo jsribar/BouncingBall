@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Vsite.Pood.BouncingBall
 {
-    class DestroyableBrick : ICollisionObject
+    class CrashBrick : ICollisionObject
     {
-        public DestroyableBrick(PointD leftTop, PointD rightBottom, double ballRadius)
+        public CrashBrick(PointD leftTop, PointD rightBottom, double ballRadius)
         {
             LeftTop = leftTop;
             RightBottom = rightBottom;
@@ -16,9 +17,10 @@ namespace Vsite.Pood.BouncingBall
             outerPlanes = CreateOuterPlanes(xLeft, yTop, xRight, yBottom);
         }
 
-        public Velocity ChangeVelocity(Velocity vel)
+        public Velocity ChangeVelocity(Velocity vel, CollisionPoint point)
         {
-            throw new NotImplementedException();
+            var p = outerPlanes.First(outerPlanes => plane == point.CollisionObject);
+            return p.CHangeVelocity(vel, point);
         }
 
         private List<CollisionPlane> CreateOuterPlanes(double xLeft, double yTop, double xRight, double yBottom)
