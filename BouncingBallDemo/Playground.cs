@@ -22,22 +22,29 @@ namespace Vsite.Pood.BouncingBallDemo
 
         private void CreateDestroyableBricks()
         {
-            bricks.Add(new VisibleDestroyableBrick(new PointD(100, 100), new PointD(150, 120), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(200, 100), new PointD(250, 120), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(300, 100), new PointD(350, 120), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(400, 100), new PointD(450, 120), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(500, 100), new PointD(550, 120), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(100, 100), new PointD(150, 120), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(200, 100), new PointD(250, 120), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(300, 100), new PointD(350, 120), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(400, 100), new PointD(450, 120), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(500, 100), new PointD(550, 120), ballRadius));
 
-            bricks.Add(new VisibleDestroyableBrick(new PointD(150, 120), new PointD(200, 140), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(250, 120), new PointD(300, 140), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(350, 120), new PointD(400, 140), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(450, 120), new PointD(500, 140), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(150, 120), new PointD(200, 140), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(250, 120), new PointD(300, 140), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(350, 120), new PointD(400, 140), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(450, 120), new PointD(500, 140), ballRadius));
 
-            bricks.Add(new VisibleDestroyableBrick(new PointD(100, 140), new PointD(150, 160), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(200, 140), new PointD(250, 160), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(300, 140), new PointD(350, 160), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(400, 140), new PointD(450, 160), ballRadius));
-            bricks.Add(new VisibleDestroyableBrick(new PointD(500, 140), new PointD(550, 160), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(100, 140), new PointD(150, 160), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(200, 140), new PointD(250, 160), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(300, 140), new PointD(350, 160), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(400, 140), new PointD(450, 160), ballRadius));
+            //bricks.Add(new VisibleDestroyableBrick(new PointD(500, 140), new PointD(550, 160), ballRadius));
+
+            List<Line> rectangleDiagonals = stageLoader.GetLevelData("2");
+
+            foreach(var line in rectangleDiagonals)
+            {
+                bricks.Add(new VisibleDestroyableBrick(line.P1, line.P2, ballRadius));
+            }
 
             bricks.ItemDestroyed += OnObstacleDestroyed;
         }
@@ -68,13 +75,13 @@ namespace Vsite.Pood.BouncingBallDemo
             base.OnSizeChanged(e);
             float distance = ballRadius - 1;
             walls = new List<CollisionPlane> {
-                new CollisionPlane(new PointD(0, distance), 
+                new CollisionPlane(new PointD(0, distance),
                                    new PointD(ClientRectangle.Right, distance)),
                 new CollisionPlane(new PointD(ClientRectangle.Right - distance, 0), 
                                    new PointD(ClientRectangle.Right - distance, ClientRectangle.Bottom)),
-                new CollisionPlane(new PointD(0, ClientRectangle.Bottom - distance), 
-                                   new PointD(ClientRectangle.Right, ClientRectangle.Bottom - distance)),
-                new CollisionPlane(new PointD(distance, 0), 
+                //new CollisionPlane(new PointD(0, ClientRectangle.Bottom - distance),
+                //                   new PointD(ClientRectangle.Right, ClientRectangle.Bottom - distance)),
+                new CollisionPlane(new PointD(distance, 0),
                                    new PointD(distance, ClientRectangle.Bottom))
             };
             obstacles.Clear();
@@ -129,6 +136,7 @@ namespace Vsite.Pood.BouncingBallDemo
         private void OnObstacleDestroyed(object sender, CollectionOfDestroyables.DestroyedItemEventArgs args)
         {
             obstacles.Remove(args.DestroyedItem);
+            dingSound.Stop();
             dingSound.Play();
         }
 
@@ -142,5 +150,7 @@ namespace Vsite.Pood.BouncingBallDemo
         private List<ICollisionObject> obstacles = new List<ICollisionObject>();
 
         SoundPlayer dingSound = new SoundPlayer(Vsite.Pood.BouncingBallDemo.Resource.Windows_Ding);
+
+        private StageLoader stageLoader = new StageLoader();
     }
 }
