@@ -35,7 +35,6 @@
             // playground1
             // 
             this.playground1.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.playground1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("playground1.BackgroundImage")));
             this.playground1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playground1.Location = new System.Drawing.Point(0, 0);
             this.playground1.Name = "playground1";
