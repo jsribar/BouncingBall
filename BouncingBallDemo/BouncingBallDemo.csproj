@@ -102,9 +102,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\1.lvl" />
+    <None Include="Resources\2.lvl" />
     <None Include="Resources\Windows Ding.wav" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="..\BouncingBall\BouncingBall.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

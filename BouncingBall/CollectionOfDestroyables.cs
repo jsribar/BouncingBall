@@ -26,6 +26,11 @@ namespace Vsite.Pood.BouncingBall
             get { return items.Count; }
         }
 
+        public void Clear()
+        {
+            items.Clear();
+        }
+
         public event EventHandler<DestroyedItemEventArgs> ItemDestroyed;
 
         private void ItemDestroy(object sender, EventArgs e)

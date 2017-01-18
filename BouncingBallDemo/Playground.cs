@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Linq;
 using System.Media;
 using System.Windows.Forms;
 using Vsite.Pood.BouncingBall;
@@ -22,52 +23,43 @@ namespace Vsite.Pood.BouncingBallDemo
 
         private void CreateDestroyableBricks()
         {
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(100, 100), new PointD(150, 120), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(200, 100), new PointD(250, 120), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(300, 100), new PointD(350, 120), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(400, 100), new PointD(450, 120), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(500, 100), new PointD(550, 120), ballRadius));
+            Random rand = new Random();
+            int levelIdx = rand.Next(0, stageLoader.levels.Count);
 
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(150, 120), new PointD(200, 140), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(250, 120), new PointD(300, 140), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(350, 120), new PointD(400, 140), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(450, 120), new PointD(500, 140), ballRadius));
+            List<Line> rectangleDiagonals = stageLoader.GetLevelData(stageLoader.levels[levelIdx]);
 
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(100, 140), new PointD(150, 160), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(200, 140), new PointD(250, 160), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(300, 140), new PointD(350, 160), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(400, 140), new PointD(450, 160), ballRadius));
-            //bricks.Add(new VisibleDestroyableBrick(new PointD(500, 140), new PointD(550, 160), ballRadius));
-
-            List<Line> rectangleDiagonals = stageLoader.GetLevelData("2");
-
+            bricks.Clear();
+            bricks.ItemDestroyed -= OnObstacleDestroyed;
             foreach(var line in rectangleDiagonals)
-            {
                 bricks.Add(new VisibleDestroyableBrick(line.P1, line.P2, ballRadius));
-            }
 
             bricks.ItemDestroyed += OnObstacleDestroyed;
         }
 
         public void InitTrajectory()
         {
-            Velocity vel = new Velocity(ballVelocity, Math.PI / 3);
-            PointD p0 = new PointD(10, 10);
-            DateTime now = DateTime.Now;
-            trajectory = new Trajectory(vel, p0, now);
-            timerRefresh.Start();
+            if(ballTrajectory == null)
+            {
+                Velocity vel = new Velocity(ballVelocity, Math.PI / 3);
+                PointD p0 = new PointD(10, 10);
+                DateTime now = DateTime.Now;
+                ballTrajectory = new Trajectory(vel, p0, now);
+                timerRefresh.Start();
+            }
         }
 
         protected override void OnPaint(PaintEventArgs pe)
         {
             foreach (VisibleDestroyableBrick b in bricks.Items)
                 b.Draw(pe.Graphics);
-            if (trajectory == null)
+            if (ballTrajectory == null)
                 return;
-            PointD newPosition = trajectory.GetNewPosition(DateTime.Now, obstacles);
+            PointD newPosition = ballTrajectory.GetNewPosition(DateTime.Now, obstacles);
             pe.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            using (Brush b = MoveBrush(newPosition))
+            using (Brush b = MoveBrush(newPosition, ballBrush))
                 pe.Graphics.FillEllipse(b, GetBallBounds(newPosition));
+            if (IsOutOfBounds(newPosition))
+                RestartStage();
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -111,9 +103,9 @@ namespace Vsite.Pood.BouncingBallDemo
             return ballBrush;
         }
 
-        private Brush MoveBrush(PointD point)
+        private Brush MoveBrush(PointD point, PathGradientBrush brush)
         {
-            PathGradientBrush b = (PathGradientBrush)ballBrush.Clone();
+            PathGradientBrush b = (PathGradientBrush)brush.Clone();
             b.TranslateTransform((float)point.X, (float)point.Y);
             return b;
         }
@@ -140,7 +132,33 @@ namespace Vsite.Pood.BouncingBallDemo
             dingSound.Play();
         }
 
-        private Trajectory trajectory = null;
+        private bool IsOutOfBounds(PointD point)
+        {
+            //Line line = new Line(point, new PointD(point.X + 10000, point.Y));
+            //LineIntersections li = new LineIntersections(line);
+            //var cpoints = li.GetCollisionPoints(walls);
+
+            //if (cpoints.Count() % 2 != 1)
+            //    return true;
+            //else
+            //    return false;
+
+            if (point.X < ClientRectangle.Left || point.X > ClientRectangle.Right
+                || point.Y < ClientRectangle.Top || point.Y > ClientRectangle.Bottom)
+                return true;
+            return false;
+        }
+
+        private void RestartStage()
+        {
+            ballTrajectory = null;
+            CreateDestroyableBricks();
+            obstacles.Clear();
+            obstacles.AddRange(walls);
+            obstacles.AddRange(bricks.Items);
+        }
+
+        private Trajectory ballTrajectory = null;
         private float ballRadius = 10;
         private double ballVelocity = 300;
 

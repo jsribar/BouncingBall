@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Linq;
 using Vsite.Pood.BouncingBall;
 using System.Text.RegularExpressions;
 
@@ -18,10 +17,10 @@ namespace Vsite.Pood.BouncingBallDemo
             levels = Directory.GetFiles(filesPath, "*", SearchOption.AllDirectories).Where(s => fileExt.Equals(Path.GetExtension(s))).ToList();
         }
 
-        public List<string> LoadLevelData(string levelName)
+        public List<string> LoadDataFromFile(string levelPath)
         {
+            
             List<string> lines = new List<string>();
-            string levelPath = filesPath + levelName + ".lvl";
             if (levels.Contains(levelPath))
             {
                 using (StreamReader reader = new StreamReader(levelPath))
@@ -32,22 +31,14 @@ namespace Vsite.Pood.BouncingBallDemo
                         lines.Add(line);
                     }
                 }
-
-                for(int i=0;i<lines.Count;i++)
-                {
-                    //Regex.Replace(lines.ElementAt(i), @"\s+", "");
-                    lines.ElementAt(i).Replace(" ", string.Empty);
-                }
             }
             return lines;
         }
 
-        public List<Line> GetLevelData(string levelName)
+        public List<Line> GetLevelData(string levelPath)
         {
-            List<string> levelLines = LoadLevelData(levelName);
+            List<string> levelLines = LoadDataFromFile(levelPath);
 
-            int linenum = levelLines.Count;
-            //PointD[,] points= new PointD[linenum, 2];
             List<Line> rectangleDiagonals = new List<Line>();
             double currX = xInitial;
             double currY = yInitial;
@@ -74,7 +65,7 @@ namespace Vsite.Pood.BouncingBallDemo
         }
 
         public readonly List<string> levels;
-        private string filesPath = Environment.CurrentDirectory + @"\levels\";
+        private string filesPath =@".\levels\";
         private const double xIncrease = 50;
         private const double yIncrease = 20;
         private const double xInitial = 100;
