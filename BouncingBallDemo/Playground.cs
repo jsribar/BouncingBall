@@ -52,11 +52,12 @@ namespace Vsite.Pood.BouncingBallDemo
         {
             foreach (VisibleDestroyableBrick b in bricks.Items)
                 b.Draw(pe.Graphics);
+            playerPaddle.Draw(pe.Graphics);
             if (ballTrajectory == null)
                 return;
             PointD newPosition = ballTrajectory.GetNewPosition(DateTime.Now, obstacles);
             pe.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            using (Brush b = MoveBrush(newPosition, ballBrush))
+            using (Brush b = MoveBrush(newPosition))
                 pe.Graphics.FillEllipse(b, GetBallBounds(newPosition));
             if (IsOutOfBounds(newPosition))
                 RestartStage();
@@ -76,6 +77,7 @@ namespace Vsite.Pood.BouncingBallDemo
                 new CollisionPlane(new PointD(distance, 0),
                                    new PointD(distance, ClientRectangle.Bottom))
             };
+            playerPaddle = CreatePaddle();
             obstacles.Clear();
             obstacles.AddRange(walls);
             obstacles.AddRange(bricks.Items);
@@ -103,9 +105,9 @@ namespace Vsite.Pood.BouncingBallDemo
             return ballBrush;
         }
 
-        private Brush MoveBrush(PointD point, PathGradientBrush brush)
+        private Brush MoveBrush(PointD point)
         {
-            PathGradientBrush b = (PathGradientBrush)brush.Clone();
+            PathGradientBrush b = (PathGradientBrush)ballBrush.Clone();
             b.TranslateTransform((float)point.X, (float)point.Y);
             return b;
         }
@@ -158,6 +160,17 @@ namespace Vsite.Pood.BouncingBallDemo
             obstacles.AddRange(bricks.Items);
         }
 
+        private Paddle CreatePaddle()
+        {
+            int rectangleCenter = (ClientRectangle.Right - ClientRectangle.Left) / 2;
+            Paddle p = new Paddle(
+                new PointD(rectangleCenter - 50, ClientRectangle.Bottom - 40),
+                new PointD(rectangleCenter + 50, ClientRectangle.Bottom - 20),
+                ballRadius);
+
+            return p;
+        }
+
         private Trajectory ballTrajectory = null;
         private float ballRadius = 10;
         private double ballVelocity = 300;
@@ -170,5 +183,6 @@ namespace Vsite.Pood.BouncingBallDemo
         SoundPlayer dingSound = new SoundPlayer(Vsite.Pood.BouncingBallDemo.Resource.Windows_Ding);
 
         private StageLoader stageLoader = new StageLoader();
+        Paddle playerPaddle;
     }
 }

@@ -8,11 +8,25 @@ using System.Drawing;
 
 namespace Vsite.Pood.BouncingBallDemo
 {
-    class Paddle : CrashBrick
+    class Paddle : CrashBrick, IMovable
     {
         public Paddle(PointD leftTop, PointD rightBottom, double ballRadius) 
             : base(leftTop, rightBottom, ballRadius)
         {
+        }
+
+        public event EventHandler Move;
+
+        protected virtual void OnMove()
+        {
+            Move?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void DoMove(PointD leftTop, PointD rightBottom)
+        {
+            OnMove();
+            this.leftTop = LeftTop;
+            this.rightBottom = rightBottom;
         }
 
         public void Draw(Graphics g)
