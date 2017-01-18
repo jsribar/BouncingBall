@@ -6,7 +6,7 @@ namespace Vsite.Pood.BouncingBall
 {
     interface IMovable
     {
-        event EventHandler Move;
+        //event EventHandler Move;
         void DoMove(PointD leftTop, PointD rightBottom);
     }
 }

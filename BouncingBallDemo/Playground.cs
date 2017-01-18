@@ -81,6 +81,7 @@ namespace Vsite.Pood.BouncingBallDemo
             obstacles.Clear();
             obstacles.AddRange(walls);
             obstacles.AddRange(bricks.Items);
+            obstacles.Add(playerPaddle);
         }
 
         private PathGradientBrush CreateBallBrush()
@@ -114,6 +115,22 @@ namespace Vsite.Pood.BouncingBallDemo
 
         private void timerRefresh_Tick(object sender, EventArgs e)
         {
+            if(heldKey == (int)Arrows.Right)
+            {
+                PointD newLeftTop = new PointD(
+                    playerPaddle.LeftTop.X + 5, playerPaddle.LeftTop.Y);
+                PointD newRightBottom = new PointD(
+                    playerPaddle.RightBottom.X + 5, playerPaddle.RightBottom.Y);
+                MovePaddle(newLeftTop, newRightBottom);
+            }
+            else if (heldKey == (int)Arrows.Left)
+            {
+                PointD newLeftTop = new PointD(
+                    playerPaddle.LeftTop.X - 1, playerPaddle.LeftTop.Y);
+                PointD newRightBottom = new PointD(
+                    playerPaddle.RightBottom.X - 1, playerPaddle.RightBottom.Y);
+                MovePaddle(newLeftTop, newRightBottom);
+            }
             Invalidate();
         }
 
@@ -158,6 +175,7 @@ namespace Vsite.Pood.BouncingBallDemo
             obstacles.Clear();
             obstacles.AddRange(walls);
             obstacles.AddRange(bricks.Items);
+            playerPaddle = CreatePaddle();
         }
 
         private Paddle CreatePaddle()
@@ -169,6 +187,49 @@ namespace Vsite.Pood.BouncingBallDemo
                 ballRadius);
 
             return p;
+        }
+
+        private void MovePaddle(PointD newLeftTop, PointD newRightBottom)
+        {
+            if (newLeftTop.X < ClientRectangle.X)
+                newLeftTop.X = ClientRectangle.Left;
+            if (newRightBottom.X > ClientRectangle.X)
+                newRightBottom.X = ClientRectangle.Right;
+            playerPaddle.DoMove(newLeftTop, newRightBottom);
+        }
+
+        protected override bool IsInputKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Right:
+                case Keys.Left:
+                case Keys.Up:
+                case Keys.Down:
+                    return true;
+                case Keys.Shift | Keys.Right:
+                case Keys.Shift | Keys.Left:
+                case Keys.Shift | Keys.Up:
+                case Keys.Shift | Keys.Down:
+                    return true;
+            }
+            return base.IsInputKey(keyData);
+        }
+
+        private void Playground_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Right)
+                heldKey = (int)Arrows.Right;
+            else if(e.KeyCode == Keys.Left)
+                heldKey = (int)Arrows.Left;
+        }
+
+        private void Playground_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Right && heldKey == (int)Arrows.Right)
+                heldKey = (int)Arrows.None;
+            else if (e.KeyCode == Keys.Left && heldKey == (int)Arrows.Left)
+                heldKey = (int)Arrows.None;
         }
 
         private Trajectory ballTrajectory = null;
@@ -183,6 +244,10 @@ namespace Vsite.Pood.BouncingBallDemo
         SoundPlayer dingSound = new SoundPlayer(Vsite.Pood.BouncingBallDemo.Resource.Windows_Ding);
 
         private StageLoader stageLoader = new StageLoader();
+        private int heldKey = (int)Arrows.None;
+        private enum Arrows {  None, Right, Left};
         Paddle playerPaddle;
+
+        
     }
 }

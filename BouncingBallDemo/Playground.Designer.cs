@@ -41,6 +41,8 @@
             // 
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.Click += new System.EventHandler(this.Playground_Click);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Playground_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Playground_KeyUp);
             this.ResumeLayout(false);
 
         }
