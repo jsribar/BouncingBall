@@ -14,7 +14,7 @@ namespace BouncingBallDemo
 	{
 		public Form1()
 		{
-			InitializeComponent();
+            InitializeComponent();
 		}
 	}
 }

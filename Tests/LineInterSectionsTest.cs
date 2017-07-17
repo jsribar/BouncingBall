@@ -42,7 +42,7 @@ namespace Vsite.Pood.BouncingBallTests
             var collisionPoints = li.GetCollisionPoints(collisionPlanes);
             Assert.AreEqual(2, collisionPoints.Count());
         }
-
+        
         [TestMethod]
         public void LineIntersection_GetCollisionPointsReturnsEmptyListWhenThereIsNoCollidingPlane()
         {

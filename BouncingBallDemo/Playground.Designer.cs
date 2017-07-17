@@ -39,7 +39,7 @@
             // 
             // Playground
             // 
-            this.BackColor = System.Drawing.SystemColors.Desktop;
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.Click += new System.EventHandler(this.Playground_Click);
             this.ResumeLayout(false);
 

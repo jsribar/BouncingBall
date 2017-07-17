@@ -25,7 +25,7 @@ namespace Vsite.Pood.BouncingBall
                 return true;
             return Math.Abs(value1 - value2) < 1e-5;
         }
-        
+
         public static bool IsWholePartEqual(this double value1, double value2)
         {
             value1 = Math.Truncate(value1);
