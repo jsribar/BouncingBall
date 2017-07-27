@@ -8,8 +8,8 @@ namespace Vsite.Pood.BouncingBall
     {
         public CrashBrick(PointD leftTop, PointD rightBottom, double ballRadius)
         {
-            LeftTop = leftTop;
-            RightBottom = rightBottom;
+            this.leftTop = leftTop;
+            this.rightBottom = rightBottom;
             double yTop = leftTop.Y - ballRadius;
             double xLeft = leftTop.X - ballRadius;
             double yBottom = rightBottom.Y + ballRadius;
@@ -43,7 +43,18 @@ namespace Vsite.Pood.BouncingBall
         }
 
         private List<CollisionPlane> collisionPlanes;
-        public readonly PointD LeftTop;
-        public readonly PointD RightBottom;
+        protected PointD leftTop;
+        protected PointD rightBottom;
+
+        public PointD LeftTop
+        {
+            get { return leftTop; }
+        }
+        public PointD RightBottom
+        {
+            get { return rightBottom; }
+        }
+        //public readonly PointD LeftTop;
+        //public readonly PointD RightBottom;
     }
 }

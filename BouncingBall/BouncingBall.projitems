@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ICollisionObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IHittable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IDestroyNotifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IMovable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Line.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LineIntersections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PointD.cs" />
